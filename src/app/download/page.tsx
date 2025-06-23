@@ -30,7 +30,7 @@ const downloadOptions = [
     key: 'questionnaire',
     label: 'Questionnaire',
     icon: <FileTextOutlined style={{ fontSize: 24 }} />,
-    file: '/assets/xeq_scale.pdf',
+    file: '/assets/XEQ_Scale.pdf',
     disabled: false,
   },
   {
