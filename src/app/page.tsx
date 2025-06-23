@@ -1,103 +1,141 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import './i18n';
+import '@ant-design/v5-patch-for-react-19';
+import React from 'react';
+import { Layout, Typography, Button, Row, Col, Space, theme } from 'antd';
+import { useTranslation } from 'react-i18next';
+import {
+  DownloadOutlined,
+  PlayCircleOutlined,
+  InfoCircleOutlined,
+  RocketOutlined, 
+} from '@ant-design/icons';
+
+import PageHeader from './components/pageHeader';
+import PageFooter from './components/pageFooter';
+import PartnerBanner from './components/PartnerBanner';
+import TeamGrid from './components/TeamGrid';
+import XEQDescription from '@/app/components/XEQDescription';
+import Citation from './components/Citation';
+import FundingDescription from './components/FundingDescription';
+import Languages from './components/Languages';
+import EventHero from './components/EventHero';
+import EventBanner from './components/EventBanner';
+import GaugeChart from './components/GaugeChart';
+
+const { Content } = Layout;
+const { Title, Paragraph, Text } = Typography;
+
+const HomePage: React.FC = () => {
+  const { t } = useTranslation();
+  const { token } = theme.useToken();
+
+  const actions = [
+    {
+      title: t('cta.try.title'),
+      href: '/try-xeq',
+      icon: <PlayCircleOutlined />,
+      label: t('cta.try.button'),
+    },
+    {
+      title: t('cta.handbook.title'),
+      href: '/download-handbook',
+      icon: <DownloadOutlined />,
+      label: t('cta.handbook.button'),
+    },
+    {
+      title: t('cta.questionnaire.title'),
+      href: '/download-questionnaire',
+      icon: <DownloadOutlined />,
+      label: t('cta.questionnaire.button'),
+    },
+    {
+      title: t('cta.learn.title'),
+      href: '/learn-more',
+      icon: <InfoCircleOutlined />,
+      label: t('cta.learn.button'),
+    },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Layout style={{ minHeight: '100vh', background: token.colorBgLayout }}>
+      <PageHeader />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Content
+  style={{
+    padding: '3rem 1rem',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    flex: '1 0 auto',
+  }}
+>
+  <div
+    style={{
+      maxWidth: 700,
+      margin: '0 auto',
+      backgroundColor: token.colorBgContainer,
+      padding: '3rem 2rem',
+      borderRadius: token.borderRadiusLG,
+      boxShadow: token.boxShadowSecondary,
+      textAlign: 'center',
+    }}
+  >
+    <Title level={1} style={{ color: token.colorTextHeading, marginBottom: '1rem' }}>
+      {t('hero.title')}
+    </Title>
+
+    <Paragraph style={{ color: token.colorTextSecondary, fontSize: '1.1rem', maxWidth: 600, margin: '0 auto 2.5rem' }}>
+    The XEQ (XAI Experience Quality) Scale helps measure the user experience of interacting with AI explanations. Psychometrically validated, free to use, and available to try online or download for your research and development needs.
+    </Paragraph>
+
+    <Row gutter={[16, 16]} justify="center">
+      <Col xs={24} sm={12}>
+        <Button
+          type="primary"
+          size="large"
+          icon={<RocketOutlined />}
+          href="/try-xeq"
+          style={{
+            width: '100%',
+            borderRadius: '999px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            padding: '0.75rem 1.5rem',
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          {t('cta.tryNow', 'Try the XEQ Scale')}
+        </Button>
+      </Col>
+      <Col xs={24} sm={12}>
+        <Button
+          size="large"
+          icon={<DownloadOutlined />}
+          href="/download"
+          style={{
+            width: '100%',
+            borderRadius: '999px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
+            padding: '0.75rem 1.5rem',
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {t('cta.viewDownloads', 'Go to Downloads')}
+        </Button>
+      </Col>
+    </Row>
+  </div>
+</Content>
+
+
+      <XEQDescription />
+      <Languages />
+      <TeamGrid />
+      <PartnerBanner />
+      <FundingDescription />
+      <Citation />
+      <PageFooter />
+    </Layout>
   );
-}
+};
+
+export default HomePage;
+

@@ -1,0 +1,34 @@
+{
+  "header": {
+      "title": "XAI Experience Quality (XEQ) Scale"
+    },
+  "hero": {
+    "title": "Evaluate XAI Experiences with XEQ",
+    "subtitle": "The iSee XEQ Scale helps you measure the quality of user experiences with explainable AI systems."
+  },
+  "cta": {
+    "try": {
+      "title": "Try the Scale Online",
+      "description": "Use the XEQ scale directly in your browser to evaluate your XAI system.",
+      "button": "Try It"
+    },
+    "handbook": {
+      "title": "Download the Handbook",
+      "description": "A complete guide to using and interpreting the XEQ scale.",
+      "button": "Download Handbook"
+    },
+    "questionnaire": {
+      "title": "Get the Questionnaire",
+      "description": "Download the validated questionnaire as a PDF document.",
+      "button": "Download PDF"
+    },
+    "learn": {
+      "title": "Find Out More",
+      "description": "Learn how the scale was developed and validated by researchers.",
+      "button": "Learn More"
+    }
+  },
+    "footer": {
+      "text": "iSee Project ©2025 – Evaluating the Human Experience of Explainable AI"
+    }
+}

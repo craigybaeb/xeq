@@ -1,0 +1,16 @@
+{
+    "header": { "title": "iSee : Échelle XEQ pour évaluer l'expérience utilisateur avec l'IA explicable" },
+    "intro": {
+      "title": "Qu'est-ce que l'échelle XEQ ?",
+      "description": "L'échelle XAI Experience Quality (XEQ) est un outil psychométrique validé conçu pour évaluer la qualité des expériences utilisateur avec des systèmes d'IA explicables (XAI). Développée par le projet iSee, l'échelle mesure l'apprentissage, l'utilité, la satisfaction et l'engagement dans les interactions avec l'IA."
+    },
+    "buttons": {
+      "downloadScale": "Télécharger l'échelle XEQ (PDF)",
+      "tryOnline": "Essayer l'échelle XEQ dans le navigateur",
+      "downloadHandbook": "Télécharger le guide XEQ (PDF)"
+    },
+    "footer": {
+      "text": "Projet iSee ©2025 – Évaluation de l'expérience humaine avec l'IA explicable"
+    }
+  }
+  

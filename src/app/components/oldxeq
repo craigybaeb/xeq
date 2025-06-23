@@ -1,0 +1,81 @@
+'use client';
+
+import React from 'react';
+import { Form, Typography, Button, message, Rate, Tooltip } from 'antd';
+
+const { Title } = Typography;
+
+const likertTooltips = [
+  'Strongly Disagree',
+  'Somewhat Disagree',
+  'Neutral',
+  'Somewhat Agree',
+  'Strongly Agree',
+];
+
+const xeqItems = [
+  'The explanations received throughout the experience were consistent.',
+  'The experience helped me understand the reliability of the AI system.',
+  'I am confident about using the AI system.',
+  'The information presented during the experience was clear.',
+  'The experience was consistent with my expectations.',
+  'The presentation of the experience was appropriate for my requirements.',
+  'The experience has improved my understanding of how the AI system works.',
+  'The experience helped me build trust in the AI system.',
+  'The experience helped me make more informed decisions.',
+  'I received the explanations in a timely and efficient manner.',
+  'The information presented was personalised to the requirements of my role.',
+  'The information presented was understandable within the requirements of my role.',
+  'The information presented showed me that the AI system performs well.',
+  'The experience helped to complete the intended task using the AI system.',
+  'The experience progressed sensibly.',
+  'The experience was satisfying.',
+  'The information presented during the experience was sufficiently detailed.',
+  'The experience provided answers to all of my explanation needs.',
+];
+
+type Props = {
+  onSubmit?: (values: any) => void;
+};
+
+const XEQForm: React.FC<Props> = ({ onSubmit }) => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    message.success('Thank you for completing the XEQ scale.');
+    onSubmit?.(values); // Pass to parent
+  };
+
+  return (
+    <div style={{ maxWidth: 800, margin: '3rem auto', padding: '1rem' }}>
+      <Title level={2} style={{ textAlign: 'center' }}>
+        XEQ Scale Evaluation
+      </Title>
+
+      <Form layout="vertical" form={form} onFinish={onFinish}>
+        {xeqItems.map((item, index) => (
+          <Form.Item
+            key={index}
+            name={`item_${index + 1}`}
+            label={`${index + 1}. ${item}`}
+            rules={[{ required: true, message: 'Please select a response.' }]}
+          >
+            <Rate
+              count={5}
+              tooltips={likertTooltips}
+              allowClear={false}
+            />
+          </Form.Item>
+        ))}
+
+        <Form.Item style={{ textAlign: 'center' }}>
+          <Button type="primary" htmlType="submit">
+            Submit Responses
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
+};
+
+export default XEQForm;
