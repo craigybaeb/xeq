@@ -19,29 +19,10 @@ import {
 } from '@ant-design/icons';
 import BarChart from './BarChart';
 import { useReactToPrint } from 'react-to-print';
+import { Principle, ResultsProps } from './types';
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
-
-type FormData = Record<string, number | string | undefined>;
-
-interface PrincipleItem {
-  key: string;
-  text: string;
-}
-
-interface Principle {
-  key: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  color: string;
-  items: PrincipleItem[];
-}
-
-type Props = {
-  formData: FormData;
-};
 
 let itemIndex = 0;
 const principles: Principle[] = [
@@ -116,7 +97,7 @@ principles.forEach((principle) => {
   }));
 });
 
-const XEQResults: React.FC<Props> = ({ formData }) => {
+const XEQResults: React.FC<ResultsProps> = ({ formData }) => {
   const printRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({

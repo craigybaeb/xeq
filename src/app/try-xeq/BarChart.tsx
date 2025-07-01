@@ -12,15 +12,9 @@ import {
   ChartOptions,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { BarChartProps } from './types';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-type BarChartProps = {
-  scores: {
-    name: string;
-    score: number;
-  }[];
-};
 
 const BarChart: React.FC<BarChartProps> = ({ scores }) => {
   const data = {

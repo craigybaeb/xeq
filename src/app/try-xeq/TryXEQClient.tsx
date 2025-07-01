@@ -13,38 +13,23 @@ import {
   Image as AntImage,
   message,
 } from 'antd';
-import type { ReactNode } from 'react';
 import PageHeader from '@/app/components/PageHeader';
 import PageFooter from '@/app/components/PageFooter';
 import XEQForm from '@/app/try-xeq/XEQForm';
 import Results from '@/app/try-xeq/Results';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Experience, ExperienceProps, FormValues } from './types';
+import styles from './styles.module.css';
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 const { Step } = Steps;
 const { Panel } = Collapse;
 
-type Experience = {
-  id: string;
-  name: string;
-  description: string;
-  image?: string;
-  images?: string[];
-  icon: ReactNode;
-};
-
-type Props = {
-  experiences: Experience[];
-  customExperience?: Experience;
-};
-
-type FormValues = Record<string, number>;
-
 const hasImages = (exp: Experience | null): exp is Experience & { images: string[] } =>
   Array.isArray(exp?.images) && exp.images.length > 0;
 
-const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
+const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [formData, setFormData] = useState<FormValues | null>(null);
@@ -82,7 +67,7 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
                     title={
                       <span>
                         {exp.icon}
-                        <span style={{ marginLeft: '0.5rem' }}>{exp.name}</span>
+                        <span className={styles.experienceTitle}>{exp.name}</span>
                       </span>
                     }
                     description={exp.description}
@@ -94,10 +79,10 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
 
           {customExperience && (
             <>
-              <div style={{ marginTop: '3rem', textAlign: 'center' }}>
+              <div className={styles.customTitle}>
                 <Title level={4}>Or test it on your own explanation experience</Title>
               </div>
-              <Row gutter={[16, 16]} justify="center" style={{ marginTop: '1rem' }}>
+              <Row gutter={[16, 16]} justify="center" className={styles.customCardRow}>
                 <Col xs={24} sm={12} md={8}>
                   <Card
                     hoverable
@@ -105,16 +90,13 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
                       setSelectedExperience(customExperience);
                       next();
                     }}
-                    style={{
-                      border: '2px dashed #52c41a',
-                      background: '#f6ffed',
-                    }}
+                    className={styles.customCard}
                   >
                     <Card.Meta
                       title={
                         <span>
                           {customExperience.icon}
-                          <span style={{ marginLeft: '0.5rem' }}>{customExperience.name}</span>
+                          <span className={styles.experienceTitle}>{customExperience.name}</span>
                         </span>
                       }
                       description={customExperience.description}
@@ -139,36 +121,26 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
           {selectedExperience.id === 'custom' ? (
             <>
               <Paragraph>
-                You’ve chosen to evaluate your own explanation experience. In the next step, you’ll
-                be shown a series of statements regarding the quality of the explanation. You’ll
-                rate how much you agree from 1–5.
+                You’ve chosen to evaluate your own explanation experience...
               </Paragraph>
               <Paragraph>
-                To help you evaluate your system, please retrieve a real example explanation from
-                your AI system — such as a prediction result, visualisation, or output. It will help
-                to have it in front of you while answering.
+                To help you evaluate your system, please retrieve a real example...
               </Paragraph>
             </>
           ) : (
             <>
               <Paragraph>
-                Below we present an example of a user interacting with an AI system. Review this
-                example and try to imagine that you are the user in question. Provide feedback on
-                the AI system using the XEQ scale on the following page.
+                Below we present an example of a user interacting with an AI system...
               </Paragraph>
 
               {hasImages(selectedExperience) && (
-                <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
+                <Row gutter={[16, 16]} className={styles.imageRow}>
                   {selectedExperience.images.map((img, idx) => (
                     <Col xs={24} sm={12} md={8} key={idx}>
                       <AntImage
                         src={img}
                         alt={`${selectedExperience.name} example ${idx + 1}`}
-                        style={{
-                          width: '100%',
-                          borderRadius: 8,
-                          objectFit: 'cover',
-                        }}
+                        className={styles.image}
                       />
                     </Col>
                   ))}
@@ -183,7 +155,7 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
       title: 'XEQ Scale',
       content: selectedExperience && (
         <>
-          <Collapse ghost style={{ marginBottom: '2rem' }}>
+          <Collapse ghost className={styles.collapse}>
             <Panel header="View Explanation Experience" key="1">
               {selectedExperience.id !== 'custom' && hasImages(selectedExperience) && (
                 <Row gutter={[16, 16]}>
@@ -192,12 +164,8 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
                       <AntImage
                         src={img}
                         alt={`Example ${idx + 1}`}
-                        style={{
-                          width: '100%',
-                          borderRadius: 8,
-                          maxHeight: 400,
-                          objectFit: 'cover',
-                        }}
+                        className={styles.image}
+                        style={{ maxHeight: 400 }}
                       />
                     </Col>
                   ))}
@@ -210,10 +178,10 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
           </Collapse>
 
           <Card>
-            <Title level={3} style={{ textAlign: 'center' }}>
+            <Title level={3} className={styles.cardTitle}>
               3. Complete the XEQ Scale
             </Title>
-            <Paragraph style={{ textAlign: 'center' }}>
+            <Paragraph className={styles.cardParagraph}>
               Rate the statements based on your selected experience.
             </Paragraph>
             <XEQForm onSubmit={handleFormSubmit} />
@@ -228,17 +196,10 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className={styles.layout}>
       <PageHeader />
-      <Content
-        style={{
-          maxWidth: 1100,
-          width: '100%',
-          margin: '0 auto',
-          padding: '2rem 1rem',
-        }}
-      >
-        <Steps current={currentStep} responsive direction="horizontal" style={{ marginBottom: '2rem' }}>
+      <Content className={styles.content}>
+        <Steps current={currentStep} responsive direction="horizontal" className={styles.steps}>
           {steps.map((step) => (
             <Step key={step.title} title={step.title} />
           ))}
@@ -251,13 +212,13 @@ const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.4 }}
-            style={{ marginBottom: '2rem' }}
+            className={styles.stepContent}
           >
             {steps[currentStep].content}
           </motion.div>
         </AnimatePresence>
 
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.navButtons}>
           {currentStep > 0 && currentStep < 3 && (
             <Button onClick={prev} style={{ marginRight: 8 }}>
               Back

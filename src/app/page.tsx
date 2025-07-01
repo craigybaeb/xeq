@@ -14,7 +14,7 @@ import PageHeader from './components/PageHeader';
 import PageFooter from './components/PageFooter';
 import PartnerBanner from './components/PartnerBanner';
 import TeamGrid from './components/TeamGrid';
-import XEQDescription from '@/app/try-xeq/XEQDescription';
+import XEQDescription from '@/app/components/XEQDescription';
 import Citation from './components/Citation';
 import FundingDescription from './components/FundingDescription';
 import Languages from './components/Languages';
