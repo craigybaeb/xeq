@@ -3,8 +3,8 @@
 
 import { Layout, Typography, theme } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
-import PageHeader from '@/app/components/pageHeader';
-import PageFooter from '@/app/components/pageFooter';
+import PageHeader from '@/app/components/PageHeader';
+import PageFooter from '@/app/components/PageFooter';
 import DownloadOptions from './DownloadOptions';
 import DownloadForm from './DownloadForm';
 import ThankyouResult from './ThankyouResult';

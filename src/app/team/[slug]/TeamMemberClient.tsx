@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-import PageFooter from '@/app/components/pageFooter';
-import PageHeader from '@/app/components/pageHeader';
+import PageFooter from '@/app/components/PageFooter';
+import PageHeader from '@/app/components/PageHeader';
 import styles from './styles.module.css';
 import { TeamMemberClientProps } from './types';
 

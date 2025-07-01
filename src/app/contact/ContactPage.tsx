@@ -16,8 +16,8 @@ import {
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 
-import PageHeader from '@/app/components/pageHeader';
-import PageFooter from '@/app/components/pageFooter';
+import PageHeader from '@/app/components/PageHeader';
+import PageFooter from '@/app/components/PageFooter';
 import styles from './styles.module.css';
 
 const { Content } = Layout;

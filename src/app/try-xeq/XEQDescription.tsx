@@ -4,7 +4,7 @@ import React from 'react';
 import { Typography, Card, Row, Col, theme } from 'antd';
 import { BulbOutlined, RocketOutlined, SmileOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import RefinementSection from './RefinementSection'; 
+import RefinementSection from '../components/RefinementSection'; 
 
 const { Title, Paragraph, Text } = Typography;
 

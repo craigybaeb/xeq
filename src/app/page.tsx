@@ -10,11 +10,11 @@ import {
   RocketOutlined, 
 } from '@ant-design/icons';
 
-import PageHeader from './components/pageHeader';
-import PageFooter from './components/pageFooter';
+import PageHeader from './components/PageHeader';
+import PageFooter from './components/PageFooter';
 import PartnerBanner from './components/PartnerBanner';
 import TeamGrid from './components/TeamGrid';
-import XEQDescription from '@/app/components/XEQDescription';
+import XEQDescription from '@/app/try-xeq/XEQDescription';
 import Citation from './components/Citation';
 import FundingDescription from './components/FundingDescription';
 import Languages from './components/Languages';

@@ -14,10 +14,10 @@ import {
   message,
 } from 'antd';
 import type { ReactNode } from 'react';
-import PageHeader from '@/app/components/pageHeader';
-import PageFooter from '@/app/components/pageFooter';
-import XEQForm from '@/app/components/XEQForm';
-import Results from '@/app/components/Results';
+import PageHeader from '@/app/components/PageHeader';
+import PageFooter from '@/app/components/PageFooter';
+import XEQForm from '@/app/try-xeq/XEQForm';
+import Results from '@/app/try-xeq/Results';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const { Content } = Layout;
