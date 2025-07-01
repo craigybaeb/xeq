@@ -1,4 +1,4 @@
-import { Layout, Typography, Card, Space } from 'antd';
+import { Typography, Card, Space } from 'antd';
 import {
   BugOutlined,
   ToolOutlined,

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Carousel, Typography } from 'antd';
 import partners from '@/data/partners';
-
+import Image from 'next/image';
 const { Text } = Typography;
 
 const PartnerBanner: React.FC = () => {
@@ -28,7 +28,9 @@ const PartnerBanner: React.FC = () => {
                 width: '100%',
               }}
             >
-              <img
+              <Image
+                width={200}
+                height={100}
                 src={partner.logo}
                 alt={partner.name}
                 style={{

@@ -3,12 +3,10 @@
 import './i18n';
 import '@ant-design/v5-patch-for-react-19';
 import React from 'react';
-import { Layout, Typography, Button, Row, Col, Space, theme } from 'antd';
+import { Layout, Typography, Button, Row, Col, theme } from 'antd';
 import { useTranslation } from 'react-i18next';
 import {
   DownloadOutlined,
-  PlayCircleOutlined,
-  InfoCircleOutlined,
   RocketOutlined, 
 } from '@ant-design/icons';
 
@@ -20,43 +18,16 @@ import XEQDescription from '@/app/components/XEQDescription';
 import Citation from './components/Citation';
 import FundingDescription from './components/FundingDescription';
 import Languages from './components/Languages';
-import EventHero from './components/EventHero';
-import EventBanner from './components/EventBanner';
-import GaugeChart from './components/GaugeChart';
+// import EventHero from './components/EventHero';
+// import EventBanner from './components/EventBanner';
+// import GaugeChart from './components/GaugeChart';
 
 const { Content } = Layout;
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const { token } = theme.useToken();
-
-  const actions = [
-    {
-      title: t('cta.try.title'),
-      href: '/try-xeq',
-      icon: <PlayCircleOutlined />,
-      label: t('cta.try.button'),
-    },
-    {
-      title: t('cta.handbook.title'),
-      href: '/download-handbook',
-      icon: <DownloadOutlined />,
-      label: t('cta.handbook.button'),
-    },
-    {
-      title: t('cta.questionnaire.title'),
-      href: '/download-questionnaire',
-      icon: <DownloadOutlined />,
-      label: t('cta.questionnaire.button'),
-    },
-    {
-      title: t('cta.learn.title'),
-      href: '/learn-more',
-      icon: <InfoCircleOutlined />,
-      label: t('cta.learn.button'),
-    },
-  ];
 
   return (
     <Layout style={{ minHeight: '100vh', background: token.colorBgLayout }}>

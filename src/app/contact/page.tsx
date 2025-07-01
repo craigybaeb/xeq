@@ -45,7 +45,7 @@ const ContactPage: React.FC = () => {
               Contact Us
             </Title>
             <Paragraph style={{ textAlign: 'center', maxWidth: 800, margin: '0 auto 2.5rem', color: token.colorText }}>
-              We'd love to hear from you. Whether it's a question about the XEQ Scale, collaboration opportunities, or feedback—use the contact details below.
+              We&apos;d love to hear from you. Whether it&apos;s a question about the XEQ Scale, collaboration opportunities, or feedback—use the contact details below.
             </Paragraph>
 
             <Row justify="center">

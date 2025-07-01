@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { Layout, Typography, Space, theme } from 'antd';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import CreativeCommonsNotice from './CreativeCommonsNotice';
 
 const { Footer } = Layout;
 const { Text, Link, Paragraph } = Typography;
 
 const PageFooter: React.FC = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const { token } = theme.useToken();
 
   return (

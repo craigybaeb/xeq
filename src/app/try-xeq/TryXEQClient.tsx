@@ -1,16 +1,19 @@
-// app/try-xeq/TryXEQPage.client.tsx
 'use client';
 
 import React, { useState } from 'react';
-import { Layout, Typography, Steps, Button, Card, Collapse, Row, Col, Image, message } from 'antd';
 import {
-  MedicineBoxOutlined,
-  CreditCardOutlined,
-  ThunderboltOutlined,
-  SmileOutlined,
-  RocketOutlined,
-  BulbOutlined,
-} from '@ant-design/icons';
+  Layout,
+  Typography,
+  Steps,
+  Button,
+  Card,
+  Collapse,
+  Row,
+  Col,
+  Image as AntImage,
+  message,
+} from 'antd';
+import type { ReactNode } from 'react';
 import PageHeader from '@/app/components/pageHeader';
 import PageFooter from '@/app/components/pageFooter';
 import XEQForm from '@/app/components/XEQForm';
@@ -26,33 +29,30 @@ type Experience = {
   id: string;
   name: string;
   description: string;
-  image?: string; // keep for compatibility
+  image?: string;
   images?: string[];
-  icon: React.ReactNode;
-};
-
-
-type Principle = {
-  key: string;
-  title: string;
-  description: string;
-  items: string[];
+  icon: ReactNode;
 };
 
 type Props = {
   experiences: Experience[];
-  principles: Principle[];
+  customExperience?: Experience;
 };
 
-export default function TryXEQClient({ experiences, principles }: Props) {
-  const [currentStep, setCurrentStep] = useState(0);
+type FormValues = Record<string, number>;
+
+const hasImages = (exp: Experience | null): exp is Experience & { images: string[] } =>
+  Array.isArray(exp?.images) && exp.images.length > 0;
+
+const TryXEQClient: React.FC<Props> = ({ experiences, customExperience }) => {
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
-  const [formData, setFormData] = useState<any>(null);
+  const [formData, setFormData] = useState<FormValues | null>(null);
 
   const next = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prev = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
-  const handleFormSubmit = (values: any) => {
+  const handleFormSubmit = (values: FormValues) => {
     setFormData(values);
     message.success('Form submitted!');
     setCurrentStep(3);
@@ -67,93 +67,145 @@ export default function TryXEQClient({ experiences, principles }: Props) {
           <Paragraph>
             Choose the AI explanation experience you would like to evaluate using the XEQ scale.
           </Paragraph>
-          <Row gutter={[24, 24]} justify="center">
-  {experiences.map((exp) => (
-    <Col xs={24} sm={12} md={8} key={exp.id} style={{ display: 'flex' }}>
-      <Card
-        hoverable
-        onClick={() => {
-          setSelectedExperience(exp);
-          next();
-        }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <Card.Meta
-          title={
-            <span>
-              {exp.icon} <span style={{ marginLeft: '0.5rem' }}>{exp.name}</span>
-            </span>
-          }
-          description={exp.description}
-        />
-      </Card>
-    </Col>
-  ))}
-</Row>
 
+          <Row gutter={[16, 16]} justify="center">
+            {experiences.map((exp) => (
+              <Col xs={24} sm={12} md={8} key={exp.id}>
+                <Card
+                  hoverable
+                  onClick={() => {
+                    setSelectedExperience(exp);
+                    next();
+                  }}
+                >
+                  <Card.Meta
+                    title={
+                      <span>
+                        {exp.icon}
+                        <span style={{ marginLeft: '0.5rem' }}>{exp.name}</span>
+                      </span>
+                    }
+                    description={exp.description}
+                  />
+                </Card>
+              </Col>
+            ))}
+          </Row>
+
+          {customExperience && (
+            <>
+              <div style={{ marginTop: '3rem', textAlign: 'center' }}>
+                <Title level={4}>Or test it on your own explanation experience</Title>
+              </div>
+              <Row gutter={[16, 16]} justify="center" style={{ marginTop: '1rem' }}>
+                <Col xs={24} sm={12} md={8}>
+                  <Card
+                    hoverable
+                    onClick={() => {
+                      setSelectedExperience(customExperience);
+                      next();
+                    }}
+                    style={{
+                      border: '2px dashed #52c41a',
+                      background: '#f6ffed',
+                    }}
+                  >
+                    <Card.Meta
+                      title={
+                        <span>
+                          {customExperience.icon}
+                          <span style={{ marginLeft: '0.5rem' }}>{customExperience.name}</span>
+                        </span>
+                      }
+                      description={customExperience.description}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+            </>
+          )}
         </>
       ),
     },
     {
       title: 'Information',
-      content: (
+      content: selectedExperience && (
         <>
           <Title level={2}>2. About the Explanation Experience</Title>
           <Paragraph>
-            You selected: <strong>{selectedExperience?.name}</strong>
+            You selected: <strong>{selectedExperience.name}</strong>
           </Paragraph>
-          <Paragraph>
-            Below we present an example of a user interacting with an AI system. Review this example and try to imagine that you are the user in question. Provide feedback on the AI system using the XEQ scale on the following page.
-          </Paragraph>
-    
-          {selectedExperience?.images?.length ? (
-            <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
-              {selectedExperience.images.map((img, idx) => (
-                <Col xs={24} sm={12} md={8} key={idx}>
-                  <Image
-                    src={img}
-                    alt={`${selectedExperience.name} example ${idx + 1}`}
-                    style={{ width: '100%', borderRadius: 8, objectFit: 'cover' }}
-                  />
-                </Col>
-              ))}
-            </Row>
+
+          {selectedExperience.id === 'custom' ? (
+            <>
+              <Paragraph>
+                You’ve chosen to evaluate your own explanation experience. In the next step, you’ll
+                be shown a series of statements regarding the quality of the explanation. You’ll
+                rate how much you agree from 1–5.
+              </Paragraph>
+              <Paragraph>
+                To help you evaluate your system, please retrieve a real example explanation from
+                your AI system — such as a prediction result, visualisation, or output. It will help
+                to have it in front of you while answering.
+              </Paragraph>
+            </>
           ) : (
-            <Paragraph style={{ marginTop: '1rem' }}>No example images available for this experience.</Paragraph>
+            <>
+              <Paragraph>
+                Below we present an example of a user interacting with an AI system. Review this
+                example and try to imagine that you are the user in question. Provide feedback on
+                the AI system using the XEQ scale on the following page.
+              </Paragraph>
+
+              {hasImages(selectedExperience) && (
+                <Row gutter={[16, 16]} style={{ marginTop: '1rem' }}>
+                  {selectedExperience.images.map((img, idx) => (
+                    <Col xs={24} sm={12} md={8} key={idx}>
+                      <AntImage
+                        src={img}
+                        alt={`${selectedExperience.name} example ${idx + 1}`}
+                        style={{
+                          width: '100%',
+                          borderRadius: 8,
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              )}
+            </>
           )}
-    
-          {/* <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Button type="primary" onClick={next}>
-              Continue to Scale
-            </Button>
-          </div> */}
         </>
       ),
-    }
-,    
+    },
     {
       title: 'XEQ Scale',
-      content: (
+      content: selectedExperience && (
         <>
           <Collapse ghost style={{ marginBottom: '2rem' }}>
             <Panel header="View Explanation Experience" key="1">
-            {selectedExperience?.images?.length ? (
-  <Row gutter={[16, 16]}>
-    {selectedExperience.images.map((img, idx) => (
-      <Col xs={24} sm={12} md={8} key={idx}>
-        <Image
-          src={img}
-          alt={`Example ${idx + 1}`}
-          style={{ width: '100%', borderRadius: 8, maxHeight: 400, objectFit: 'cover' }}
-        />
-      </Col>
-    ))}
-  </Row>
-) : (
-  <Paragraph>No example images provided.</Paragraph>
-)}
-
-              <Paragraph>{selectedExperience?.description}</Paragraph>
+              {selectedExperience.id !== 'custom' && hasImages(selectedExperience) && (
+                <Row gutter={[16, 16]}>
+                  {selectedExperience.images.map((img, idx) => (
+                    <Col xs={24} sm={12} md={8} key={idx}>
+                      <AntImage
+                        src={img}
+                        alt={`Example ${idx + 1}`}
+                        style={{
+                          width: '100%',
+                          borderRadius: 8,
+                          maxHeight: 400,
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              )}
+              {selectedExperience.description && (
+                <Paragraph>{selectedExperience.description}</Paragraph>
+              )}
             </Panel>
           </Collapse>
 
@@ -171,24 +223,22 @@ export default function TryXEQClient({ experiences, principles }: Props) {
     },
     {
       title: 'Results',
-      content: <Results formData={formData} />
-    }
+      content: formData ? <Results formData={formData} /> : null,
+    },
   ];
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <PageHeader />
       <Content
-  style={{
-    maxWidth: 1100,
-    width: '100%',
-    minWidth: 800, // 👈 key fix: reserves enough width from the start
-    margin: '0 auto',
-    padding: '3rem 1rem',
-  }}
->
-
-        <Steps current={currentStep} style={{ marginBottom: '2rem' }}>
+        style={{
+          maxWidth: 1100,
+          width: '100%',
+          margin: '0 auto',
+          padding: '2rem 1rem',
+        }}
+      >
+        <Steps current={currentStep} responsive direction="horizontal" style={{ marginBottom: '2rem' }}>
           {steps.map((step) => (
             <Step key={step.title} title={step.title} />
           ))}
@@ -214,7 +264,11 @@ export default function TryXEQClient({ experiences, principles }: Props) {
             </Button>
           )}
           {currentStep < 2 && (
-            <Button type="primary" onClick={next} disabled={currentStep === 0 && !selectedExperience}>
+            <Button
+              type="primary"
+              onClick={next}
+              disabled={currentStep === 0 && !selectedExperience}
+            >
               Next
             </Button>
           )}
@@ -223,4 +277,6 @@ export default function TryXEQClient({ experiences, principles }: Props) {
       <PageFooter />
     </Layout>
   );
-}
+};
+
+export default TryXEQClient;

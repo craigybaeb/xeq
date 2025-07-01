@@ -24,6 +24,7 @@ import Citation from '@/app/components/Citation';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
+type FormValues = Record<string, number>;
 
 const downloadOptions = [
   {
@@ -77,12 +78,13 @@ const DownloadPage: React.FC = () => {
     });
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: FormValues) => {
     console.log(`Form submission for:`, selected, values);
     handleDownload(selected);
     form.resetFields();
     setShowThankYou(true);
   };
+  
 
   const fadeVariants = {
     initial: { opacity: 0, y: 10 },

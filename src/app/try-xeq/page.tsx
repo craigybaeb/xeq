@@ -1,8 +1,12 @@
-// app/try-xeq/TryXEQPage.server.tsx
 import React from 'react';
 import { Metadata } from 'next';
 import TryXEQClient from './TryXEQClient';
-import { BookOutlined, CreditCardOutlined, MedicineBoxOutlined } from '@ant-design/icons';
+import {
+  BookOutlined,
+  CreditCardOutlined,
+  MedicineBoxOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 
 export const metadata: Metadata = {
   title: 'Try the XEQ Scale',
@@ -21,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-const experiences = [
+const predefinedExperiences = [
   {
     id: 'exp1',
     name: 'Credit Risk Explanation',
@@ -60,55 +64,20 @@ const experiences = [
   },
 ];
 
-const principles = [
-  {
-    key: 'Learning',
-    title: 'Learning',
-    description: 'The extent to which the experience develops knowledge or competence.',
-    items: [
-      'The experience helped me understand the reliability of the AI system.',
-      'The information presented during the experience was clear.',
-      'The experience has improved my understanding of how the AI system works.',
-      'The experience helped me build trust in the AI system.',
-    ],
-  },
-  {
-    key: 'Utility',
-    title: 'Utility',
-    description: 'The contribution of the experience towards task completion.',
-    items: [
-      'I am confident about using the AI system.',
-      'The experience helped me make more informed decisions.',
-      'The information presented was personalised to the requirements of my role.',
-      'The information presented was understandable within the requirements of my role.',
-      'The experience helped to complete the intended task using the AI system.',
-      'The information presented during the experience was sufficiently detailed.',
-    ],
-  },
-  {
-    key: 'Fulfilment',
-    title: 'Fulfilment',
-    description: 'The degree to which the experience supports the achievement of XAI goals.',
-    items: [
-      'The experience was consistent with my expectations.',
-      'The presentation of the experience was appropriate for my requirements.',
-      'The information presented showed me that the AI system performs well.',
-      'The experience provided answers to all of my explanation needs.',
-      'The experience was satisfying.',
-    ],
-  },
-  {
-    key: 'Engagement',
-    title: 'Engagement',
-    description: 'The quality of the interaction between the user and the XAI system.',
-    items: [
-      'The explanations received throughout the experience were consistent.',
-      'I received the explanations in a timely and efficient manner.',
-      'The experience progressed sensibly.',
-    ],
-  },
-];
+const customExperience = {
+  id: 'custom',
+  name: 'Your Own Explanation Experience',
+  description: 'Test the XEQ scale using your own AI explanation experience.',
+  icon: <UserOutlined style={{ fontSize: '2rem', color: '#52c41a' }} />,
+  images: [], // could lead to a blank state or upload page later
+  isCustom: true,
+};
 
 export default function TryXEQPage() {
-  return <TryXEQClient experiences={experiences} principles={principles} />;
+  return (
+    <TryXEQClient
+      experiences={predefinedExperiences}
+      customExperience={customExperience}
+    />
+  );
 }
