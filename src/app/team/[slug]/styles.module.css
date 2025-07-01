@@ -1,0 +1,46 @@
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1.5rem;
+    border: 4px solid var(--avatar-border-color, #1677ff); /* fallback color */
+  }
+  
+  .nav {
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .navBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .navImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--nav-border-color, #d9d9d9); /* fallback color */
+  }
+  

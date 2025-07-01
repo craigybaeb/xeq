@@ -1,154 +1,45 @@
-'use client';
-
-import React from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import {
-  Layout,
-  Typography,
-  theme,
-  Card,
-  Button,
-  Space,
-} from 'antd';
-import { motion } from 'framer-motion';
-
+import { Metadata } from 'next';
 import teamMembers from '@/data/teamMembers';
-import PageFooter from '@/app/components/pageFooter';
-import PageHeader from '@/app/components/pageHeader';
+import TeamMemberClient from './TeamMemberClient';
+import { TeamMemberPageProps } from './types';
 
-const { Content } = Layout;
-const { Title, Paragraph, Text } = Typography;
+// Dynamically generate metadata for the team member page based on the slug in the URL
+export function generateMetadata({ params }: TeamMemberPageProps): Metadata {
+  const member = teamMembers.find((m) => m.slug === params.slug);
 
-export default function TeamMemberPage() {
-  const { slug } = useParams();
-  const { token } = theme.useToken();
-
-  const slugStr = Array.isArray(slug) ? slug[0] : slug;
-  const memberIndex = teamMembers.findIndex((m) => m.slug === slugStr);
-  const member = teamMembers[memberIndex];
-
-  if (memberIndex === -1 || !member) {
-    return (
-      <>
-        <PageHeader />
-        <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
-          <Title level={2}>Member not found</Title>
-        </div>
-        <PageFooter />
-      </>
-    );
+  // Fallback metadata if no matching team member is found
+  if (!member) {
+    return {
+      title: 'XEQ | Team Member Not Found',
+      description: 'The team member you are looking for does not exist.',
+    };
   }
 
-  const prevMember =
-    teamMembers[(memberIndex - 1 + teamMembers.length) % teamMembers.length];
-  const nextMember =
-    teamMembers[(memberIndex + 1) % teamMembers.length];
+  // Dynamic metadata using the team member's information
+  return {
+    title: `XEQ | ${member.name}`,
+    description: `Meet ${member.name}, ${member.role} at the iSee XEQ Team.`,
+  };
+}
 
-  return (
-    <Layout style={{ minHeight: '100vh', background: token.colorBgLayout }}>
-      <PageHeader />
-      <Content style={{ maxWidth: 800, margin: '0 auto', padding: '3rem 1rem' }}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <Card
-            style={{
-              backgroundColor: token.colorBgContainer,
-              borderRadius: token.borderRadius,
-              boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-              padding: '2rem',
-              textAlign: 'center',
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
-              style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}
-            >
-              <Image
-                src={`/assets/Team/${member.src}`}
-                alt={member.name}
-                width={150}
-                height={150}
-                style={{
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: `4px solid ${token.colorPrimary}`,
-                }}
-              />
-            </motion.div>
+// Server-side component that renders the client-side team member profile
+export default function TeamMemberPage({ params }: TeamMemberPageProps) {
+  // Extract and normalise the slug from URL parameters
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <Title level={3} style={{ color: token.colorTextBase }}>
-                {member.name}
-              </Title>
-              <Text type="secondary" style={{ display: 'block', marginBottom: '1rem' }}>
-                {member.role}
-              </Text>
-              <Paragraph style={{ textAlign: 'center' }}>{member.bio}</Paragraph>
-            </motion.div>
+  // Find the index of the current member
+  const index = teamMembers.findIndex((member) => member.slug === slug);
+  const member = teamMembers[index];
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              style={{ marginTop: '2rem' }}
-            >
-              <Space style={{ justifyContent: 'space-between', width: '100%' }}>
-                <Link href={`/team/${prevMember.slug}`}>
-                  <Button
-                    type="default"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                  >
-                    <Image
-                      src={`/assets/Team/${prevMember.src}`}
-                      alt={prevMember.name}
-                      width={32}
-                      height={32}
-                      style={{
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        border: `2px solid ${token.colorBorder}`,
-                      }}
-                    />
-                    ← {prevMember.name.split(' ')[0]}
-                  </Button>
-                </Link>
+  // Render fallback if the member was not found
+  if (index === -1 || !member) {
+    return <div>Member not found</div>;
+  }
 
-                <Link href={`/team/${nextMember.slug}`}>
-                  <Button
-                    type="primary"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                  >
-                    {nextMember.name.split(' ')[0]} →
-                    <Image
-                      src={`/assets/Team/${nextMember.src}`}
-                      alt={nextMember.name}
-                      width={32}
-                      height={32}
-                      style={{
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        border: `2px solid ${token.colorPrimary}`,
-                      }}
-                    />
-                  </Button>
-                </Link>
-              </Space>
-            </motion.div>
-          </Card>
-        </motion.div>
-      </Content>
-      <PageFooter />
-    </Layout>
-  );
+  // Determine the previous and next team members for navigation
+  const prev = teamMembers[(index - 1 + teamMembers.length) % teamMembers.length];
+  const next = teamMembers[(index + 1) % teamMembers.length];
+
+  // Render the client-side component with member navigation
+  return <TeamMemberClient member={member} prev={prev} next={next} />;
 }
