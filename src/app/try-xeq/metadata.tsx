@@ -1,6 +1,6 @@
 // app/tryxeq/metadata.ts
 export const metadata = {
-    title: 'Try the XEQ Scale',
+    title: 'XEQ | Try the XEQ Scale',
     description: 'Evaluate your AI explanation experience using the XEQ scale.',
     openGraph: {
       title: 'Try the XEQ Scale',
