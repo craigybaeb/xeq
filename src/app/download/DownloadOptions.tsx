@@ -29,17 +29,20 @@ const DownloadOptions: React.FC<DownloadOptionsProps> = ({ selected, setSelected
             style={{ width: 60, height: 60, cursor: disabled ? 'not-allowed' : 'pointer' }}
           />
           <div style={{ marginTop: 8 }}>
-            <Text>{label}</Text>
-            {disabled && (
-              <div style={{ fontSize: '0.75rem', color: token.colorTextSecondary }}>
-                Coming soon
-              </div>
-            )}
+          <Text>{label}</Text>
+          <div style={{
+            fontSize: '0.75rem',
+            color: token.colorTextSecondary,
+            minHeight: 18,
+            visibility: disabled ? 'visible' : 'hidden',
+          }}>
+            Coming soon
           </div>
         </div>
-      ))}
-    </Space>
-  );
-};
+                </div>
+              ))}
+            </Space>
+          );
+        };
 
 export default DownloadOptions;
