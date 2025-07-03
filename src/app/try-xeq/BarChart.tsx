@@ -57,7 +57,7 @@ const BarChart: React.FC<BarChartProps> = ({ scores }) => {
     },
     scales: {
       y: {
-        beginAtZero: false,
+        beginAtZero: true,
         max: 5,
         ticks: {
           stepSize: 1,
