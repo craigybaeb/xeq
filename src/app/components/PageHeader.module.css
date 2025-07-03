@@ -1,0 +1,71 @@
+.header {
+    background-color: #001529;
+    padding: 0 1rem;
+    height: 64px;
+    line-height: 64px;
+  }
+  
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .logoSection {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .logo {
+    object-fit: contain;
+  }
+  
+  .title {
+    color: white !important;
+    margin: 0 !important;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Desktop nav links */
+  .navLinks {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navLinks a {
+    color: white;
+  }
+  
+  /* Hide menu button by default */
+  .menuButton {
+    display: none;
+  }
+  
+  /* Responsive: show mobile button, hide desktop nav */
+  @media (max-width: 768px) {
+    .navLinks {
+      display: none;
+    }
+  
+    .menuButton {
+      display: inline-block;
+    }
+  
+    .title {
+      font-size: 1rem !important;
+      max-width: 140px;
+    }
+  
+    .logo {
+      width: 80px !important;
+      height: 32px !important;
+    }
+  }
+  

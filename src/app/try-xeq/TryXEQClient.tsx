@@ -37,11 +37,24 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
   const next = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prev = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
+  const handleStepChange = (value: number) => {
+    // Only allow navigating to earlier steps or to Results if formData exists
+    if (value < currentStep || (value === 3 && formData)) {
+      setCurrentStep(value);
+    }
+  }
   const handleFormSubmit = (values: FormValues) => {
     setFormData(values);
     message.success('Form submitted!');
     setCurrentStep(3);
   };
+
+  const reset = () => {
+    setFormData(null);
+    setSelectedExperience(null);
+    setCurrentStep(0);
+  };
+  
 
   const steps = [
     {
@@ -191,19 +204,30 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
     },
     {
       title: 'Results',
-      content: formData ? <Results formData={formData} /> : null,
-    },
+      content: formData && (
+        <>
+          <Results formData={formData} onTryAnother={reset} />
+        </>
+      ),
+    }    
   ];
 
   return (
     <Layout className={styles.layout}>
       <PageHeader />
       <Content className={styles.content}>
-        <Steps current={currentStep} responsive direction="horizontal" className={styles.steps}>
-          {steps.map((step) => (
-            <Step key={step.title} title={step.title} />
-          ))}
-        </Steps>
+      <Steps
+        current={currentStep}
+        responsive
+        direction="horizontal"
+        className={styles.steps}
+        onChange={handleStepChange}
+      >
+        {steps.map((step) => (
+          <Step key={step.title} title={step.title} />
+        ))}
+      </Steps>
+
 
         <AnimatePresence mode="wait">
           <motion.div

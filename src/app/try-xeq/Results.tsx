@@ -97,7 +97,7 @@ principles.forEach((principle) => {
   }));
 });
 
-const XEQResults: React.FC<ResultsProps> = ({ formData }) => {
+const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother }) => {
   const printRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
@@ -246,9 +246,14 @@ const XEQResults: React.FC<ResultsProps> = ({ formData }) => {
       </div>
 
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <Button type="primary" onClick={handlePrint}>
+        <Button type="primary" onClick={handlePrint} style={{ marginRight: '1rem' }}>
           Print Results to PDF
         </Button>
+        {onTryAnother && (
+          <Button onClick={onTryAnother}>
+            Try a Different Experience
+          </Button>
+        )}
       </div>
     </div>
   );

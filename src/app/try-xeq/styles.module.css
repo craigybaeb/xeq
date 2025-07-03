@@ -1,0 +1,63 @@
+.layout {
+    min-height: 100vh;
+  }
+  
+  .content {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .steps {
+    margin-bottom: 2rem;
+  }
+  
+  .stepContent {
+    margin-bottom: 2rem;
+  }
+  
+  .navButtons {
+    text-align: center;
+  }
+  
+  .experienceTitle {
+    margin-left: 0.5rem;
+  }
+  
+  .customTitle {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  
+  .customCardRow {
+    margin-top: 1rem;
+  }
+  
+  .customCard {
+    border: 2px dashed #52c41a;
+    background: #f6ffed;
+  }
+  
+  .image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .imageRow {
+    margin-top: 1rem;
+  }
+  
+  .collapse {
+    margin-bottom: 2rem;
+  }
+  
+  .cardTitle {
+    text-align: center;
+  }
+  
+  .cardParagraph {
+    text-align: center;
+  }
+  
