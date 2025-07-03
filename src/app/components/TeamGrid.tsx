@@ -28,34 +28,41 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ member, index }) => {
     <Col xs={12} sm={12} md={8} lg={6} style={{ textAlign: 'center' }}>
       <Space direction="vertical" align="center">
         <Link href={`/team/${member.slug}`} style={{ textDecoration: 'none' }}>
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
-            }}
-            transition={{ duration: 0.6, delay: index * 0.05 }}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+          }}
+          transition={{ duration: 0.6, delay: index * 0.05 }}
+          style={{
+            width: 120,
+            height: 120,
+            borderRadius: '50%', // makes it circular
+            overflow: 'hidden',   // clips the image to the circle
+            cursor: 'pointer',
+            display: 'inline-block',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+          }}
+        >
+          <Image
+            src={`/assets/Team/${member.src}`}
+            alt={member.name}
+            width={120}
+            height={120}
             style={{
-              borderRadius: '50%',
-              padding: '4px',
-              cursor: 'pointer',
-              display: 'inline-block',
+              objectFit: 'cover', // fill entire area
+              width: '100%',
+              height: '100%',
+              display: 'block', // removes inline spacing artifacts
             }}
-          >
-            <Image
-              src={`/assets/Team/${member.src}`}
-              alt={member.name}
-              width={100}
-              height={100}
-              style={{
-                borderRadius: '50%',
-                objectFit: 'cover',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-              }}
-            />
-          </motion.div>
+          />
+        </motion.div>
+
+
+
         </Link>
 
         <div>
