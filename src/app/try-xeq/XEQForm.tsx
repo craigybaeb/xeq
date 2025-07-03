@@ -252,14 +252,18 @@ const XEQForm: React.FC<XEQFormProps> = ({ onSubmit }) => {
       key={label}
       value={idx + 1}
       style={{
-        whiteSpace: 'normal',
+        whiteSpace: 'normal', 
         textAlign: 'center',
         flex: isMobile ? '1 0 auto' : '1',
         borderRadius: isMobile ? 0 : undefined,
-        width: isMobile ? '100%' : undefined,
+        width: isMobile ? '100%' : '180px', 
+        minHeight: '48px', 
+        padding: '0.5rem', 
+        wordBreak: 'break-word', 
         border: isMobile ? '1px solid #d9d9d9' : undefined,
       }}
     >
+  
       {label}
     </Radio.Button>
   ))}
