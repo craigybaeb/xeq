@@ -17,7 +17,7 @@ const FundingDescription: React.FC = () => {
       viewport={{ once: true }}
     >
       <Card
-        bordered={false}
+        variant='outlined'
         style={{
           backgroundColor: token.colorInfoBg,
           color: token.colorText,

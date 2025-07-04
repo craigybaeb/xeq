@@ -228,7 +228,7 @@ const XEQForm: React.FC<XEQFormProps> = ({ onSubmit }) => {
 
               }
             >
-              <Card bordered={false} style={{ backgroundColor: 'transparent' }}>
+              <Card variant='outlined' style={{ backgroundColor: 'transparent' }}>
                 {items.map(({ key: itemKey, text }) => (
                   <Form.Item
                     key={itemKey}

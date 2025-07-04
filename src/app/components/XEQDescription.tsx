@@ -54,7 +54,7 @@ const XEQDescription: React.FC = () => {
             textAlign: 'center',
             boxShadow: token.boxShadowSecondary,
           }}
-          bordered={false}
+          variant='outlined'
         >
           <Title level={2} style={{ color: token.colorTextHeading }}>What is the XEQ Scale?</Title>
           <Paragraph style={{ fontSize: '1.15rem', maxWidth: 900, margin: '0 auto', color: token.colorText }}>
@@ -75,7 +75,7 @@ const XEQDescription: React.FC = () => {
       style={{ height: '100%' }}
     >
       <Card
-        bordered={false}
+        variant='outlined'
         style={{
           backgroundColor: color,
           borderRadius: 16,
