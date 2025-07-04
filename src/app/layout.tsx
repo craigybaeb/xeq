@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XEQ",
+title: "XEQ | XAI Experience Quality",
   description: "Evaluate XAI Experiences with XEQ",
 };
 
