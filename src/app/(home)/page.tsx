@@ -18,9 +18,6 @@ import XEQDescription from '@/app/(home)/XEQDescription';
 import Citation from '@/app/components/Citation';
 import FundingDescription from '@/app/(home)/FundingDescription';
 import Languages from '@/app/(home)/Languages';
-// import EventHero from './components/EventHero';
-// import EventBanner from './components/EventBanner';
-// import GaugeChart from './components/GaugeChart';
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
@@ -103,6 +100,7 @@ const HomePage: React.FC = () => {
       <PartnerBanner />
       <FundingDescription />
       <Citation />
+      <EventHero />
       <PageFooter />
     </Layout>
   );
