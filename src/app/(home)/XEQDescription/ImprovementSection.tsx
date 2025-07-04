@@ -8,7 +8,7 @@ import {
 
 const { Paragraph, Text, Title } = Typography;
 
-const RefinementSection: React.FC = () => {
+const ImprovementSection: React.FC = () => {
   return (
     <Card
       style={{
@@ -65,4 +65,4 @@ const RefinementSection: React.FC = () => {
   );
 };
 
-export default RefinementSection;
+export default ImprovementSection;
