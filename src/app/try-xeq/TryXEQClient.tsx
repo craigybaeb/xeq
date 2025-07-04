@@ -134,16 +134,22 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
           {selectedExperience.id === 'custom' ? (
             <>
               <Paragraph>
-                You’ve chosen to evaluate your own explanation experience...
+              You’ve chosen to evaluate your own explanation experience. In the next step, you’ll
+                be shown a series of statements regarding the quality of the explanation. You’ll
+                rate how much you agree from 1–5.
               </Paragraph>
               <Paragraph>
-                To help you evaluate your system, please retrieve a real example...
+              To help you evaluate your system, please retrieve a real example explanation from
+                your AI system — such as a prediction result, visualisation, or output. It will help
+                to have it in front of you while answering.
               </Paragraph>
             </>
           ) : (
             <>
               <Paragraph>
-                Below we present an example of a user interacting with an AI system...
+              Below we present an example of a user interacting with an AI system. Review this
+                example and try to imagine that you are the user in question. Provide feedback on
+                the AI system using the XEQ scale on the following page.
               </Paragraph>
 
               {hasImages(selectedExperience) && (
