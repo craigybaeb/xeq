@@ -41,7 +41,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ member, index }) => {
             width: 120,
             height: 120,
             borderRadius: '50%', // makes it circular
-            overflow: 'hidden',   
+            overflow: 'hidden',   // clips the image to the circle
             cursor: 'pointer',
             display: 'inline-block',
             boxShadow: '0 2px 6px rgba(0,0,0,0.15)',

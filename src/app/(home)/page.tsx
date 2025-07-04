@@ -1,6 +1,6 @@
 'use client';
 
-import './i18n';
+import '../i18n';
 import '@ant-design/v5-patch-for-react-19';
 import React from 'react';
 import { Layout, Typography, Button, Row, Col, theme } from 'antd';
@@ -10,14 +10,14 @@ import {
   RocketOutlined, 
 } from '@ant-design/icons';
 
-import PageHeader from './components/PageHeader';
-import PageFooter from './components/PageFooter';
-import PartnerBanner from './components/PartnerBanner';
-import TeamGrid from './components/TeamGrid';
-import XEQDescription from '@/app/components/XEQDescription';
-import Citation from './components/Citation';
-import FundingDescription from './components/FundingDescription';
-import Languages from './components/Languages';
+import PageHeader from '@/app/components/PageHeader';
+import PageFooter from '@/app/components/PageFooter';
+import PartnerBanner from '@/app/(home)/PartnerBanner';
+import TeamGrid from '@/app/(home)/TeamGrid';
+import XEQDescription from '@/app/(home)/XEQDescription';
+import Citation from '@/app/components/Citation';
+import FundingDescription from '@/app/(home)/FundingDescription';
+import Languages from '@/app/(home)/Languages';
 // import EventHero from './components/EventHero';
 // import EventBanner from './components/EventBanner';
 // import GaugeChart from './components/GaugeChart';
