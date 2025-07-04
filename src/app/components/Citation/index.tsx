@@ -10,13 +10,13 @@ const { Title } = Typography;
 
 const bibtexEntry = `
 @misc{wijekoon2025xeqscaleevaluatingxai,
-      title={XEQ Scale for Evaluating XAI Experience Quality}, 
-      author={Anjana Wijekoon and Nirmalie Wiratunga and David Corsar and Kyle Martin and Ikechukwu Nkisi-Orji and Belen Díaz-Agudo and Derek Bridge},
-      year={2025},
-      eprint={2407.10662},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2407.10662}, 
+  title={XEQ Scale for Evaluating XAI Experience Quality}, 
+  author={Anjana Wijekoon and Nirmalie Wiratunga and David Corsar and Kyle Martin and Ikechukwu Nkisi-Orji and Belen Díaz-Agudo and Derek Bridge},
+  year={2025},
+  eprint={2407.10662},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2407.10662}, 
 }
 `.trim();
 
@@ -53,11 +53,12 @@ const Citation: React.FC = () => {
           padding: '1rem 2rem',
           fontFamily: 'monospace',
           whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word', // Prevent long words from overflowing
           color: token.colorTextBase,
           position: 'relative',
         }}
       >
-        <code>{bibtexEntry}</code>
+        <code style={{ display: 'block', overflowX: 'auto' }}>{bibtexEntry}</code>
 
         <Button
           icon={<CopyOutlined />}
