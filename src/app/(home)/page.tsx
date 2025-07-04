@@ -100,7 +100,6 @@ const HomePage: React.FC = () => {
       <PartnerBanner />
       <FundingDescription />
       <Citation />
-      <EventHero />
       <PageFooter />
     </Layout>
   );
