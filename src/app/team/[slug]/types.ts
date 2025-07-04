@@ -13,6 +13,6 @@ export interface TeamMember {
   }
 
   export interface TeamMemberPageProps {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
   }
   
