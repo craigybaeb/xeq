@@ -17,7 +17,7 @@ const DownloadForm: React.FC<DownloadFormProps> = ({
   return (
     <>
       <Title level={2} style={{ textAlign: 'center' }}>
-        Access your download{selected.length > 1 ? 's' : ''}
+        Access your download{selected?.length > 1 ? 's' : ''}
       </Title>
 
       <Form

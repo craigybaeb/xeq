@@ -26,8 +26,8 @@ export const downloadOptions: DownloadOption[] = [
 ];
 
 export const formatLabelList = (labels: string[]) => {
-  if (labels.length === 0) return '';
-  if (labels.length === 1) return labels[0];
+  if (labels?.length === 0) return '';
+  if (labels?.length === 1) return labels[0];
   const last = labels.pop();
   return `${labels.join(', ')} and ${last}`;
 };

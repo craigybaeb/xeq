@@ -11,7 +11,7 @@ const ThankyouResult: React.FC<ThankYouResultProps> = ({ selected, handleDownloa
     <Result
       status="success"
       title="Thank you!"
-      subTitle={`Your download${selected.length > 1 ? 's have' : ' has'} started.`}
+      subTitle={`Your download${selected?.length > 1 ? 's have' : ' has'} started.`}
       extra={[
         <Button key="download" type="primary" onClick={() => handleDownload(selected)}>
           Re-download {formatLabelList([...selected])}
