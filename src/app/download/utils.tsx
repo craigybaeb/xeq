@@ -6,7 +6,7 @@ export const downloadOptions: DownloadOption[] = [
     key: 'questionnaire',
     label: 'Questionnaire',
     icon: <FileTextOutlined style={{ fontSize: 24 }} />,
-    file: '/assets/XEQ_Scale.pdf',
+    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_scale.pdf?raw=true',
     disabled: false,
   },
   {
