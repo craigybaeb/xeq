@@ -150,7 +150,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
 
               {(() => {
                 const images = selectedExperience.images ?? [];
-                return images.length > 0 ? (
+                return images?.length > 0 ? (
                   <Row gutter={[16, 16]} className={styles.imageRow}>
                     {images.map((img, idx) => (
                       <Col xs={24} sm={12} md={8} key={idx}>
@@ -177,7 +177,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
             <Panel header="View Explanation Experience" key="1">
               {(() => {
                 const images = selectedExperience.images ?? [];
-                return selectedExperience.id !== 'custom' && images.length > 0 ? (
+                return selectedExperience.id !== 'custom' && images?.length > 0 ? (
                   <Row gutter={[16, 16]}>
                     {images.map((img, idx) => (
                       <Col xs={24} sm={12} md={8} key={idx}>
