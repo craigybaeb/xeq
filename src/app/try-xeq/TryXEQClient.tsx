@@ -68,10 +68,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 <Card
                   hoverable
                   onClick={() => {
-                    setSelectedExperience({
-                      ...exp,
-                      images: Array.isArray(exp.images) ? exp.images : [],
-                    });
+                    setSelectedExperience(exp);
                     next();
                   }}
                 >
@@ -99,12 +96,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                   <Card
                     hoverable
                     onClick={() => {
-                      setSelectedExperience({
-                        ...customExperience,
-                        images: Array.isArray(customExperience.images)
-                          ? customExperience.images
-                          : [],
-                      });
+                      setSelectedExperience(customExperience);
                       next();
                     }}
                     className={styles.customCard}
@@ -113,9 +105,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                       title={
                         <span>
                           {customExperience.icon}
-                          <span className={styles.experienceTitle}>
-                            {customExperience.name}
-                          </span>
+                          <span className={styles.experienceTitle}>{customExperience.name}</span>
                         </span>
                       }
                       description={customExperience.description}
@@ -158,19 +148,22 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 the AI system using the XEQ scale on the following page.
               </Paragraph>
 
-              {selectedExperience.images && selectedExperience.images.length > 0 && (
-                <Row gutter={[16, 16]} className={styles.imageRow}>
-                  {selectedExperience.images.map((img, idx) => (
-                    <Col xs={24} sm={12} md={8} key={idx}>
-                      <AntImage
-                        src={img}
-                        alt={`${selectedExperience.name} example ${idx + 1}`}
-                        className={styles.image}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              )}
+              {(() => {
+                const images = selectedExperience.images ?? [];
+                return images.length > 0 ? (
+                  <Row gutter={[16, 16]} className={styles.imageRow}>
+                    {images.map((img, idx) => (
+                      <Col xs={24} sm={12} md={8} key={idx}>
+                        <AntImage
+                          src={img}
+                          alt={`${selectedExperience.name} example ${idx + 1}`}
+                          className={styles.image}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : null;
+              })()}
             </>
           )}
         </>
@@ -182,20 +175,24 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
         <>
           <Collapse ghost className={styles.collapse}>
             <Panel header="View Explanation Experience" key="1">
-              {selectedExperience.id !== 'custom' && selectedExperience.images && selectedExperience.images.length > 0 && (
-                <Row gutter={[16, 16]}>
-                  {selectedExperience.images.map((img, idx) => (
-                    <Col xs={24} sm={12} md={8} key={idx}>
-                      <AntImage
-                        src={img}
-                        alt={`Example ${idx + 1}`}
-                        className={styles.image}
-                        style={{ maxHeight: 400 }}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              )}
+              {(() => {
+                const images = selectedExperience.images ?? [];
+                return selectedExperience.id !== 'custom' && images.length > 0 ? (
+                  <Row gutter={[16, 16]}>
+                    {images.map((img, idx) => (
+                      <Col xs={24} sm={12} md={8} key={idx}>
+                        <AntImage
+                          src={img}
+                          alt={`Example ${idx + 1}`}
+                          className={styles.image}
+                          style={{ maxHeight: 400 }}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : null;
+              })()}
+
               {selectedExperience.description && (
                 <Paragraph>{selectedExperience.description}</Paragraph>
               )}
