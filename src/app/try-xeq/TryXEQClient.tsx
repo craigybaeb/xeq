@@ -26,9 +26,6 @@ const { Title, Paragraph } = Typography;
 const { Step } = Steps;
 const { Panel } = Collapse;
 
-const hasImages = (exp: Experience | null): exp is Experience & { images: string[] } =>
-  Array.isArray(exp?.images) && exp.images?.length > 0;
-
 const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
@@ -38,11 +35,11 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
   const prev = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   const handleStepChange = (value: number) => {
-    // Only allow navigating to earlier steps or to Results if formData exists
     if (value < currentStep || (value === 3 && formData)) {
       setCurrentStep(value);
     }
-  }
+  };
+
   const handleFormSubmit = (values: FormValues) => {
     setFormData(values);
     message.success('Form submitted!');
@@ -54,7 +51,6 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
     setSelectedExperience(null);
     setCurrentStep(0);
   };
-  
 
   const steps = [
     {
@@ -72,7 +68,10 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 <Card
                   hoverable
                   onClick={() => {
-                    setSelectedExperience(exp);
+                    setSelectedExperience({
+                      ...exp,
+                      images: Array.isArray(exp.images) ? exp.images : [],
+                    });
                     next();
                   }}
                 >
@@ -100,7 +99,12 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                   <Card
                     hoverable
                     onClick={() => {
-                      setSelectedExperience(customExperience);
+                      setSelectedExperience({
+                        ...customExperience,
+                        images: Array.isArray(customExperience.images)
+                          ? customExperience.images
+                          : [],
+                      });
                       next();
                     }}
                     className={styles.customCard}
@@ -109,7 +113,9 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                       title={
                         <span>
                           {customExperience.icon}
-                          <span className={styles.experienceTitle}>{customExperience.name}</span>
+                          <span className={styles.experienceTitle}>
+                            {customExperience.name}
+                          </span>
                         </span>
                       }
                       description={customExperience.description}
@@ -134,12 +140,12 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
           {selectedExperience.id === 'custom' ? (
             <>
               <Paragraph>
-              You’ve chosen to evaluate your own explanation experience. In the next step, you’ll
+                You’ve chosen to evaluate your own explanation experience. In the next step, you’ll
                 be shown a series of statements regarding the quality of the explanation. You’ll
                 rate how much you agree from 1–5.
               </Paragraph>
               <Paragraph>
-              To help you evaluate your system, please retrieve a real example explanation from
+                To help you evaluate your system, please retrieve a real example explanation from
                 your AI system — such as a prediction result, visualisation, or output. It will help
                 to have it in front of you while answering.
               </Paragraph>
@@ -147,12 +153,12 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
           ) : (
             <>
               <Paragraph>
-              Below we present an example of a user interacting with an AI system. Review this
+                Below we present an example of a user interacting with an AI system. Review this
                 example and try to imagine that you are the user in question. Provide feedback on
                 the AI system using the XEQ scale on the following page.
               </Paragraph>
 
-              {hasImages(selectedExperience) && (
+              {selectedExperience.images && selectedExperience.images.length > 0 && (
                 <Row gutter={[16, 16]} className={styles.imageRow}>
                   {selectedExperience.images.map((img, idx) => (
                     <Col xs={24} sm={12} md={8} key={idx}>
@@ -176,7 +182,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
         <>
           <Collapse ghost className={styles.collapse}>
             <Panel header="View Explanation Experience" key="1">
-              {selectedExperience.id !== 'custom' && hasImages(selectedExperience) && (
+              {selectedExperience.id !== 'custom' && selectedExperience.images && selectedExperience.images.length > 0 && (
                 <Row gutter={[16, 16]}>
                   {selectedExperience.images.map((img, idx) => (
                     <Col xs={24} sm={12} md={8} key={idx}>
@@ -215,25 +221,24 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
           <Results formData={formData} onTryAnother={reset} />
         </>
       ),
-    }    
+    },
   ];
 
   return (
     <Layout className={styles.layout}>
       <PageHeader />
       <Content className={styles.content}>
-      <Steps
-        current={currentStep}
-        responsive
-        direction="horizontal"
-        className={styles.steps}
-        onChange={handleStepChange}
-      >
-        {steps.map((step) => (
-          <Step key={step.title} title={step.title} />
-        ))}
-      </Steps>
-
+        <Steps
+          current={currentStep}
+          responsive
+          direction="horizontal"
+          className={styles.steps}
+          onChange={handleStepChange}
+        >
+          {steps.map((step) => (
+            <Step key={step.title} title={step.title} />
+          ))}
+        </Steps>
 
         <AnimatePresence mode="wait">
           <motion.div
