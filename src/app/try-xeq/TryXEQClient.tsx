@@ -27,8 +27,18 @@ const { Step } = Steps;
 const { Panel } = Collapse;
 
 const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience }) => {
+
+  const EMPTY_EXPERIENCE: Experience = {
+    id: '',
+    name: '',
+    description: '',
+    icon: null,
+    images: [],
+  };
+
+
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [selectedExperience, setSelectedExperience] = useState<Experience>(EMPTY_EXPERIENCE);
   const [formData, setFormData] = useState<FormValues | null>(null);
 
   const next = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
