@@ -27,7 +27,7 @@ const { Step } = Steps;
 const { Panel } = Collapse;
 
 const hasImages = (exp: Experience | null): exp is Experience & { images: string[] } =>
-  Array.isArray(exp?.images) && exp.images.length > 0;
+  Array.isArray(exp?.images) && exp.images?.length > 0;
 
 const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);

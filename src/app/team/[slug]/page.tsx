@@ -34,8 +34,8 @@ export default async function TeamMemberPage({ params }: TeamMemberPageProps) {
     return <div>Member not found</div>;
   }
 
-  const PREVIOUS_MEMBER = teamMembers[(INDEX - 1 + teamMembers.length) % teamMembers.length];
-  const NEXT_MEMBER = teamMembers[(INDEX + 1) % teamMembers.length];
+  const PREVIOUS_MEMBER = teamMembers[(INDEX - 1 + teamMembers?.length) % teamMembers?.length];
+  const NEXT_MEMBER = teamMembers[(INDEX + 1) % teamMembers?.length];
 
   return <TeamMemberClient member={MEMBER} prev={PREVIOUS_MEMBER} next={NEXT_MEMBER} />;
 }

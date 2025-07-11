@@ -82,7 +82,7 @@ const DownloadForm: React.FC<DownloadFormProps> = ({
         </Form.Item>
 
         <Form.Item style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <Button type="primary" htmlType="submit" disabled={selected.length === 0}>
+          <Button type="primary" htmlType="submit" disabled={selected?.length === 0}>
             Download {formatLabelList([...selected])}
           </Button>
         </Form.Item>

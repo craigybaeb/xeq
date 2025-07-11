@@ -112,12 +112,12 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother }) => {
       .map(([, val]) => Number(val))
       .filter((v) => !isNaN(v));
 
-    return values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : null;
+    return values?.length > 0 ? values.reduce((a, b) => a + b, 0) / values?.length : null;
   })();
 
   const chartData: { name: string; score: number }[] = principles.map(({ title, items }) => {
     const scores = items.map(({ key }) => Number(formData?.[key]));
-    const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+    const avg = scores?.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores?.length : 0;
     return { name: title, score: avg };
   });
 
@@ -191,8 +191,8 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother }) => {
 
         {principles.map(({ key, title, icon, description, color, items }) => {
           const scores = items.map(({ key }) => Number(formData?.[key]));
-          const avg = scores.length > 0
-            ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(2)
+          const avg = scores?.length > 0
+            ? (scores.reduce((a, b) => a + b, 0) / scores?.length).toFixed(2)
             : 'N/A';
 
           return (
