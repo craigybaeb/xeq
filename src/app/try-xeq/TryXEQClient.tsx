@@ -58,7 +58,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
 
   const reset = () => {
     setFormData(null);
-    setSelectedExperience(null);
+    setSelectedExperience(EMPTY_EXPERIENCE);
     setCurrentStep(0);
   };
 
