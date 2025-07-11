@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Layout,
   Typography,
@@ -52,6 +52,12 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
     setCurrentStep(0);
   };
 
+  useEffect(() => {
+    if (selectedExperience && !Array.isArray(selectedExperience.images)) {
+      console.warn('⚠️ Missing or invalid images on selectedExperience:', selectedExperience);
+    }
+  }, [selectedExperience]);
+
   const steps = [
     {
       title: 'Select Experience',
@@ -68,7 +74,10 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 <Card
                   hoverable
                   onClick={() => {
-                    setSelectedExperience(exp);
+                    setSelectedExperience({
+                      ...exp,
+                      images: Array.isArray(exp.images) ? exp.images : [],
+                    });
                     next();
                   }}
                 >
@@ -96,7 +105,12 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                   <Card
                     hoverable
                     onClick={() => {
-                      setSelectedExperience(customExperience);
+                      setSelectedExperience({
+                        ...customExperience,
+                        images: Array.isArray(customExperience.images)
+                          ? customExperience.images
+                          : [],
+                      });
                       next();
                     }}
                     className={styles.customCard}
@@ -148,22 +162,18 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 the AI system using the XEQ scale on the following page.
               </Paragraph>
 
-              {(() => {
-                const images = selectedExperience.images ?? [];
-                return images?.length > 0 ? (
-                  <Row gutter={[16, 16]} className={styles.imageRow}>
-                    {images.map((img, idx) => (
-                      <Col xs={24} sm={12} md={8} key={idx}>
-                        <AntImage
-                          src={img}
-                          alt={`${selectedExperience.name} example ${idx + 1}`}
-                          className={styles.image}
-                        />
-                      </Col>
-                    ))}
+              {Array.isArray(selectedExperience.images) &&
+                selectedExperience.images.map((img, idx) => (
+                  <Row gutter={[16, 16]} className={styles.imageRow} key={idx}>
+                    <Col xs={24} sm={12} md={8}>
+                      <AntImage
+                        src={img}
+                        alt={`${selectedExperience.name} example ${idx + 1}`}
+                        className={styles.image}
+                      />
+                    </Col>
                   </Row>
-                ) : null;
-              })()}
+                ))}
             </>
           )}
         </>
@@ -175,23 +185,20 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
         <>
           <Collapse ghost className={styles.collapse}>
             <Panel header="View Explanation Experience" key="1">
-              {(() => {
-                const images = selectedExperience.images ?? [];
-                return selectedExperience.id !== 'custom' && images?.length > 0 ? (
-                  <Row gutter={[16, 16]}>
-                    {images.map((img, idx) => (
-                      <Col xs={24} sm={12} md={8} key={idx}>
-                        <AntImage
-                          src={img}
-                          alt={`Example ${idx + 1}`}
-                          className={styles.image}
-                          style={{ maxHeight: 400 }}
-                        />
-                      </Col>
-                    ))}
+              {selectedExperience.id !== 'custom' &&
+                Array.isArray(selectedExperience.images) &&
+                selectedExperience.images.map((img, idx) => (
+                  <Row gutter={[16, 16]} key={idx}>
+                    <Col xs={24} sm={12} md={8}>
+                      <AntImage
+                        src={img}
+                        alt={`Example ${idx + 1}`}
+                        className={styles.image}
+                        style={{ maxHeight: 400 }}
+                      />
+                    </Col>
                   </Row>
-                ) : null;
-              })()}
+                ))}
 
               {selectedExperience.description && (
                 <Paragraph>{selectedExperience.description}</Paragraph>
