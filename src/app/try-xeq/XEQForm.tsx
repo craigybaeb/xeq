@@ -234,7 +234,7 @@ const XEQForm: React.FC<XEQFormProps> = ({ onSubmit }) => {
                   <Form.Item
                     key={itemKey}
                     name={itemKey}
-                    label={`${itemKey.split('_')[1]}. ${text}`}
+                    label={`${Number(itemKey.split('_')[1]) + 1}. ${text}`}
                     rules={[{ required: true, message: 'Please select a response.' }]}
                     style={{ marginBottom: '1.5rem' }}
                   >
