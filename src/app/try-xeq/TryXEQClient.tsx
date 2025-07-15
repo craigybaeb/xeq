@@ -11,7 +11,6 @@ import {
   Row,
   Col,
   Image as AntImage,
-  message,
 } from 'antd';
 import PageHeader from '@/app/components/PageHeader';
 import PageFooter from '@/app/components/PageFooter';
@@ -52,7 +51,6 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
 
   const handleFormSubmit = (values: FormValues) => {
     setFormData(values);
-    message.success('Form submitted!');
     setCurrentStep(3);
   };
 
