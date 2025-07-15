@@ -3,6 +3,7 @@
 import '../i18n';
 import '@ant-design/v5-patch-for-react-19';
 import React from 'react';
+import Link from 'next/link';
 import { Layout, Typography, Button, Row, Col, theme } from 'antd';
 import { useTranslation } from 'react-i18next';
 import {
@@ -59,36 +60,40 @@ const HomePage: React.FC = () => {
 
     <Row gutter={[16, 16]} justify="center">
       <Col xs={24} sm={12}>
-        <Button
-          type="primary"
-          size="large"
-          icon={<RocketOutlined />}
-          href="/try-xeq"
-          style={{
-            width: '100%',
-            borderRadius: '999px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            padding: '0.75rem 1.5rem',
-          }}
-        >
-          {t('cta.tryNow', 'Try the XEQ Scale')}
-        </Button>
-      </Col>
-      <Col xs={24} sm={12}>
-        <Button
-          size="large"
-          icon={<DownloadOutlined />}
-          href="/download"
-          style={{
-            width: '100%',
-            borderRadius: '999px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
-            padding: '0.75rem 1.5rem',
-          }}
-        >
-          {t('cta.viewDownloads', 'Go to Downloads')}
-        </Button>
-      </Col>
+  <Link href="/try-xeq">
+    <Button
+      type="primary"
+      size="large"
+      icon={<RocketOutlined />}
+      style={{
+        width: '100%',
+        borderRadius: '999px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        padding: '0.75rem 1.5rem',
+      }}
+    >
+      {t('cta.tryNow', 'Try the XEQ Scale')}
+    </Button>
+  </Link>
+</Col>
+
+<Col xs={24} sm={12}>
+  <Link href="/download">
+    <Button
+      size="large"
+      icon={<DownloadOutlined />}
+      style={{
+        width: '100%',
+        borderRadius: '999px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
+        padding: '0.75rem 1.5rem',
+      }}
+    >
+      {t('cta.viewDownloads', 'Go to Downloads')}
+    </Button>
+  </Link>
+</Col>
+
     </Row>
   </div>
 </Content>
