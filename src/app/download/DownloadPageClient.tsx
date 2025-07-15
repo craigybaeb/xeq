@@ -1,6 +1,6 @@
-// app/download/DownloadPageClient.tsx
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Layout, Typography, theme } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageHeader from '@/app/components/PageHeader';
@@ -20,6 +20,11 @@ export default function DownloadPageClient() {
   } = useDownloadForm();
 
   const { token } = theme.useToken();
+
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const fadeVariants = {
     initial: { opacity: 0, y: 10 },
@@ -43,23 +48,25 @@ export default function DownloadPageClient() {
             <DownloadOptions selected={selected} setSelected={setSelected} />
           </div>
 
-          <AnimatePresence mode="wait">
-            {showThankYou ? (
-              <motion.div key="success" variants={fadeVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.4 }}>
-                <ThankyouResult selected={selected} handleDownload={handleDownload} />
-              </motion.div>
-            ) : (
-              <motion.div key="form" variants={fadeVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.4 }}>
-                <DownloadForm
-                  form={form}
-                  skip={skip}
-                  setSkip={setSkip}
-                  onFinish={onFinish}
-                  selected={selected}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {hasMounted && (
+            <AnimatePresence mode="wait">
+              {showThankYou ? (
+                <motion.div key="success" variants={fadeVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.4 }}>
+                  <ThankyouResult selected={selected} handleDownload={handleDownload} />
+                </motion.div>
+              ) : (
+                <motion.div key="form" variants={fadeVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.4 }}>
+                  <DownloadForm
+                    form={form}
+                    skip={skip}
+                    setSkip={setSkip}
+                    onFinish={onFinish}
+                    selected={selected}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
         </div>
       </Content>
       <PageFooter />
