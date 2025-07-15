@@ -12,13 +12,11 @@ import { MenuOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './PageHeader.module.css';
-import { useTranslation } from 'react-i18next';
 
 const { Header } = Layout;
 const { Title } = Typography;
 
 const PageHeader: React.FC = () => {
-  const { t } = useTranslation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const menuItems = [
@@ -43,7 +41,7 @@ const PageHeader: React.FC = () => {
             />
           </Link>
           <Title level={3} className={styles.title}>
-            {t('header.title', 'XAI Experience Quality (XEQ) Scale')}
+            XAI Experience Quality (XEQ) Scale
           </Title>
         </div>
 

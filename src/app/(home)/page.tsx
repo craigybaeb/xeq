@@ -5,7 +5,6 @@ import '@ant-design/v5-patch-for-react-19';
 import React from 'react';
 import Link from 'next/link';
 import { Layout, Typography, Button, Row, Col, theme } from 'antd';
-import { useTranslation } from 'react-i18next';
 import {
   DownloadOutlined,
   RocketOutlined, 
@@ -24,7 +23,6 @@ const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 
 const HomePage: React.FC = () => {
-  const { t } = useTranslation();
   const { token } = theme.useToken();
 
   return (
@@ -51,7 +49,7 @@ const HomePage: React.FC = () => {
     }}
   >
     <Title level={1} style={{ color: token.colorTextHeading, marginBottom: '1rem' }}>
-      {t('hero.title')}
+      Evaluate XAI Experiences with XEQ
     </Title>
 
     <Paragraph style={{ color: token.colorTextSecondary, fontSize: '1.1rem', maxWidth: 600, margin: '0 auto 2.5rem' }}>
@@ -72,7 +70,7 @@ const HomePage: React.FC = () => {
         padding: '0.75rem 1.5rem',
       }}
     >
-      {t('cta.tryNow', 'Try the XEQ Scale')}
+      Try the XEQ Scale
     </Button>
   </Link>
 </Col>
@@ -89,7 +87,7 @@ const HomePage: React.FC = () => {
         padding: '0.75rem 1.5rem',
       }}
     >
-      {t('cta.viewDownloads', 'Go to Downloads')}
+      Go to Downloads
     </Button>
   </Link>
 </Col>
