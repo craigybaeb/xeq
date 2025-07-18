@@ -20,8 +20,8 @@ export const downloadOptions: DownloadOption[] = [
     key: 'sheet',
     label: 'Data Sheet',
     icon: <TableOutlined style={{ fontSize: 24 }} />,
-    file: '/assets/xeq_data_sheet.xlsx',
-    disabled: true,
+    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/XEQ_Data_Analysis_Tool.xlsx?raw=true',
+    disabled: false,
   },
 ];
 
