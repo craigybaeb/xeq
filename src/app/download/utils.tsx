@@ -1,4 +1,4 @@
-import { FileTextOutlined, BookOutlined, TableOutlined } from '@ant-design/icons';
+import { FileTextOutlined, BookOutlined, TableOutlined, ImportOutlined } from '@ant-design/icons';
 import { DownloadOption } from './types';
 
 export const downloadOptions: DownloadOption[] = [
@@ -13,8 +13,8 @@ export const downloadOptions: DownloadOption[] = [
     key: 'handbook',
     label: 'Handbook',
     icon: <BookOutlined style={{ fontSize: 24 }} />,
-    file: '/assets/xeq_handbook.pdf',
-    disabled: true,
+    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_handbook.pdf?raw=true',
+    disabled: false,
   },
   {
     key: 'sheet',
@@ -22,6 +22,13 @@ export const downloadOptions: DownloadOption[] = [
     icon: <TableOutlined style={{ fontSize: 24 }} />,
     file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/XEQ_Data_Analysis_Tool.xlsx?raw=true',
     disabled: false,
+  },
+  {
+    key: 'notebook',
+    label: 'Data Collation Tool',
+    icon: <ImportOutlined style={{ fontSize: 24 }} />,
+    file: '',
+    disabled: true,
   },
 ];
 
