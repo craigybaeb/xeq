@@ -170,18 +170,21 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 the AI system using the XEQ scale on the following page.
               </Paragraph>
 
-              {Array.isArray(selectedExperience.images) &&
-                selectedExperience.images.map((img, idx) => (
-                  <Row gutter={[16, 16]} className={styles.imageRow} key={idx}>
-                    <Col xs={24} sm={12} md={8}>
-                      <AntImage
-                        src={img}
-                        alt={`${selectedExperience.name} example ${idx + 1}`}
-                        className={styles.image}
-                      />
-                    </Col>
-                  </Row>
-                ))}
+              {Array.isArray(selectedExperience.images) && (
+  <Row gutter={[16, 16]} className={styles.imageRow}>
+    {selectedExperience.images.map((img, idx) => (
+      <Col xs={24} sm={12} md={8} key={idx}>
+        <AntImage
+          src={img}
+          alt={`${selectedExperience.name} example ${idx + 1}`}
+          className={styles.image}
+          preview={false}
+        />
+      </Col>
+    ))}
+  </Row>
+)}
+
             </>
           )}
         </>
