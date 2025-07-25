@@ -21,6 +21,8 @@ const DownloadForm: React.FC<DownloadFormProps> = ({
       </Title>
 
       <Form
+        id='download-form'
+        name="Download Form"
         form={form}
         layout="vertical"
         onFinish={onFinish}

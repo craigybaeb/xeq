@@ -26,11 +26,33 @@ export function useDownloadForm() {
   };
 
   const onFinish = (values: Record<string, number>) => {
-    console.log('Form submission for:', selected, values);
-    handleDownload(selected);
-    form.resetFields();
-    setShowThankYou(true);
-  };
+  console.log('Form submission for:', selected, values);
+
+  // Google Analytics event tracking
+  if (typeof window !== 'undefined') {
+  const gtag = (window as typeof window & { gtag: Gtag.Gtag }).gtag;
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'download_submit', {
+      form_id: 'download-form',
+      form_name: 'Download Form',
+      form_destination: window.location.href,
+      form_length: Object.keys(values).length,
+      form_submit_text: 'Download',
+      event_callback: () => console.log('GA event sent'),
+    });
+  }
+}
+
+
+  // Actual file download
+  handleDownload(selected);
+
+  // UI state changes
+  form.resetFields();
+  setShowThankYou(true);
+};
+
 
   return {
     form,
