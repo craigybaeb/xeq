@@ -243,8 +243,12 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
         })}
 
         <Card title="XEQ Scores by Dimension" style={{ marginTop: '2rem' }}>
-          <BarChart scores={chartData} />
-        </Card>
+  <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
+    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder's goals.
+  </Paragraph>
+  <BarChart scores={chartData} />
+</Card>
+
 
         {selectedExperience !== "custom" && stakeholder && (
   <Card
@@ -258,6 +262,9 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
   }
   style={{ marginTop: '2rem' }}
 >
+  <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
+     This chart shows how each stakeholder scores the explanation experience across the four XEQ dimensions. Use it to identify where stakeholder needs are being well addressed or potentially overlooked. Large differences between stakeholders may indicate a need to further personalise explanations for different roles.
+  </Paragraph>
   <GroupedBarChart
     scores={(() => {
       const experienceKey = selectedExperience as keyof typeof stakeholders;
@@ -271,6 +278,7 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     })()}
   />
 </Card>
+
 )}
 
       </div>
