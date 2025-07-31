@@ -270,7 +270,13 @@ const stakeholderEntry =
     {
       title: 'XEQ Scale',
       content: selectedExperience && (
-        <>
+        <><Title level={2} className={styles.cardTitle}>
+              4. Complete the XEQ Scale
+            </Title>
+                        <Paragraph className={styles.cardParagraph}>
+              Rate the statements from 1-5 based on how much you agree with them in relation to your selected explanation experience.
+            </Paragraph>
+             <Paragraph className={styles.cardParagraph} type='secondary'>(1 = Strongly Disagree, 5 = Strongly Agree)</Paragraph>
           <Collapse ghost className={styles.collapse}>
             <Panel header="View Explanation Experience" key="1">
               {selectedExperience.id !== 'custom' &&
@@ -295,13 +301,6 @@ const stakeholderEntry =
           </Collapse>
 
           <Card>
-            <Title level={3} className={styles.cardTitle}>
-              4. Complete the XEQ Scale
-            </Title>
-            <Paragraph className={styles.cardParagraph}>
-              Rate the statements from 1-5 based on how much you agree with them in relation to your selected explanation experience.
-            </Paragraph>
-             <Paragraph className={styles.cardParagraph} type='secondary'>(1 = Strongly Disagree, 5 = Strongly Agree)</Paragraph>
             <XEQForm onSubmit={handleFormSubmit} />
           </Card>
         </>

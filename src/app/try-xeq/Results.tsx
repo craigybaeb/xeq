@@ -112,7 +112,7 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     if (names.length === 0) return '';
     if (names.length === 1) return names[0];
     if (names.length === 2) return `${names[0]} & ${names[1]}`;
-  
+
     return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
 };
 
@@ -234,7 +234,7 @@ const systemXEQScore = getSystemAverageScore();
   return (
     <div style={{ padding: '2rem', maxWidth: 900, margin: '0 auto' }}>
       <div ref={printRef}>
-        <Title level={2} style={{ textAlign: 'center' }}>4. Your Results</Title>
+        <Title level={2} style={{ textAlign: 'center' }}>5. Your Results</Title>
 
         <Card style={{ marginBottom: '2rem', background: '#fafafa' }}>
           <Title level={4}><strong>{stakeholder}</strong> Stakeholder XEQ Score</Title>
