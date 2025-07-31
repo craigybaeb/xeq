@@ -247,20 +247,30 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
         </Card>
 
         {selectedExperience !== "custom" && stakeholder && (
-  <Card title="Grouped Scores by Stakeholder" style={{ marginTop: '2rem' }}>
-    <GroupedBarChart
-      scores={(() => {
-        const experienceKey = selectedExperience as keyof typeof stakeholders;
-        const stakeholderList = stakeholders[experienceKey] ?? [];
+  <Card
+  title={
+    <span>
+      Grouped Scores by Stakeholder{' '}
+      <Tooltip title={`Scores for stakeholders other than ${stakeholder} (which you selected) are AI-generated and may not reflect real evaluations.`}>
+        <InfoCircleOutlined style={{ marginLeft: 8 }} />
+      </Tooltip>
+    </span>
+  }
+  style={{ marginTop: '2rem' }}
+>
+  <GroupedBarChart
+    scores={(() => {
+      const experienceKey = selectedExperience as keyof typeof stakeholders;
+      const stakeholderList = stakeholders[experienceKey] ?? [];
 
-        return stakeholderList.map((s) => 
-          s.stakeholder === stakeholder
-            ? { stakeholder: s.stakeholder, values: chartData }
-            : s
-        );
-      })()}
-    />
-  </Card>
+      return stakeholderList.map((s) =>
+        s.stakeholder === stakeholder
+          ? { stakeholder: s.stakeholder, values: chartData }
+          : s
+      );
+    })()}
+  />
+</Card>
 )}
 
       </div>

@@ -13,6 +13,8 @@ import {
   Input,
   Select,
   Image as AntImage,
+  Tooltip,
+  Tag,
 } from 'antd';
 import PageHeader from '@/app/components/PageHeader';
 import PageFooter from '@/app/components/PageFooter';
@@ -22,6 +24,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Experience, ExperienceProps, FormSubmission, FormValues } from './types';
 import styles from './styles.module.css';
 import stakeholders from '@/data/stakeholders';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
@@ -49,6 +52,11 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
   label: s.stakeholder,
   value: s.stakeholder,
 })) || [];
+
+const stakeholderEntry =
+  stakeholders[selectedExperience.id as keyof typeof stakeholders]?.find(
+    (s) => s.stakeholder === stakeholder
+  );
 
 
   const next = () => setCurrentStep((prev) => Math.min(prev + 1, 4));
@@ -103,6 +111,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                       ...exp,
                       images: Array.isArray(exp.images) ? exp.images : [],
                     });
+                    setStakeholder('');
                     next();
                   }}
                 >
@@ -136,6 +145,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                           ? customExperience.images
                           : [],
                       });
+                      setStakeholder('');
                       next();
                     }}
                     className={styles.customCard}
@@ -177,9 +187,22 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
             </>
           ) : (
             <>
-            <Paragraph>
-              In this experience, you are acting as a <strong>{selectedExperience.stakeholder}</strong>.
-            </Paragraph>
+            {stakeholder ? (
+  <>
+    <Paragraph>
+      In this experience, you are acting as a <Tag><strong>{stakeholder}</strong></Tag>.
+    </Paragraph>
+    {stakeholderEntry?.description ? (
+      <Paragraph>
+        <em>{stakeholderEntry.description}</em>
+      </Paragraph>
+    ) : null}
+  </>
+) : (
+  <Paragraph>
+    Please select a stakeholder type, to evaluate the explanation experience from their perspective.
+  </Paragraph>
+)}
             <Select
               placeholder="Select your stakeholder role"
               style={{ width: '100%', marginBottom: '1rem' }}
@@ -198,7 +221,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
         <>
           <Title level={2}>3. About the Explanation Experience</Title>
           <Paragraph>
-            You selected: <strong>{selectedExperience.name}</strong>
+            You selected: <Tag><strong>{selectedExperience.name}</strong></Tag>
           </Paragraph>
 
           {selectedExperience.id === 'custom' ? (
@@ -207,13 +230,24 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
                 To help you evaluate your system, retrieve a real explanation output such as a visualisation
                 or prediction from your AI system.
               </Paragraph>
+              <Paragraph>Please evaluate the explanation experience from the perspective of a{' '}
+  <Tag style={{marginRight: 0}}><strong>{stakeholder}</strong></Tag>, considering their role, responsibilities, and typical concerns. Think
+  about their specific <i>explanation needs</i> and how well the AI system addresses those needs.</Paragraph>
             </>
           ) : (
             <>
               <Paragraph>
-                Below we present an example of a user interacting with an AI system. Imagine you are the user and
-                evaluate the experience from that perspective.
-              </Paragraph>
+  Below we present an example of a{' '}
+  <Tooltip title={stakeholderEntry?.description || 'No description available'}>
+    <Tag><strong style={{ cursor: 'pointer' }}>
+      {stakeholder} <InfoCircleOutlined />
+    </strong>
+    </Tag>
+  </Tooltip>{' '}
+  interacting with an AI system. Please evaluate the explanation experience from the perspective of a{' '}
+  {stakeholder.toLowerCase()}, considering their role, responsibilities, and typical concerns. Think
+  about their specific <i>explanation needs</i> and how well the AI system addresses those needs.
+</Paragraph>
               {Array.isArray(selectedExperience.images) && (
                 <Row gutter={[16, 16]} className={styles.imageRow}>
                   {selectedExperience.images.map((img, idx) => (
@@ -265,8 +299,9 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
               4. Complete the XEQ Scale
             </Title>
             <Paragraph className={styles.cardParagraph}>
-              Rate the statements based on your selected experience.
+              Rate the statements from 1-5 based on how much you agree with them in relation to your selected explanation experience.
             </Paragraph>
+             <Paragraph className={styles.cardParagraph} type='secondary'>(1 = Strongly Disagree, 5 = Strongly Agree)</Paragraph>
             <XEQForm onSubmit={handleFormSubmit} />
           </Card>
         </>
@@ -323,7 +358,7 @@ const TryXEQClient: React.FC<ExperienceProps> = ({ experiences, customExperience
               onClick={next}
               disabled={
                 (currentStep === 0 && !selectedExperience) ||
-                (currentStep === 1 && selectedExperience.id === 'custom' && !stakeholder.trim())
+                (currentStep === 1 && !stakeholder.trim())
               }
             >
               Next

@@ -38,8 +38,7 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/AssistHub/Compliancy-1-4.png',
       '/assets/ExampleUseCases/AssistHub/Compliancy-1-5.png',
       '/assets/ExampleUseCases/AssistHub/Compliancy-1-6.png',
-    ],
-    stakeholder: 'Loan Applicant',
+    ]
   },
   {
     id: 'fracture-diagnosis',
@@ -50,8 +49,7 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/RadioAssist/Compliancy-2-1.png',
       '/assets/ExampleUseCases/RadioAssist/Compliancy-2-2.png',
       '/assets/ExampleUseCases/RadioAssist/Compliancy-2-3.png',
-    ],
-    stakeholder: 'Radiologist',
+    ]
   },
   {
     id: 'course-assistant',
@@ -62,8 +60,7 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/CourseAssist/Compliancy-3-1.png',
       '/assets/ExampleUseCases/CourseAssist/Compliancy-3-2.png',
       '/assets/ExampleUseCases/CourseAssist/Compliancy-3-3.png',
-    ],
-    stakeholder: 'Student'
+    ]
   },
 ];
 
