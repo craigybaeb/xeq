@@ -34,12 +34,9 @@ export function useDownloadForm() {
 
   if (typeof gtag === 'function') {
     gtag('event', 'download_submit', {
-      form_id: 'download-form',
-      form_name: 'Download Form',
-      form_destination: window.location.href,
-      form_length: Object.keys(values).length,
-      form_submit_text: 'Download',
-      event_callback: () => console.log('GA event sent'),
+      job_role: values.jobRole || '',
+      industry: values.industry || '',
+      selected_files: selected.join(', '),
     });
   }
 }
