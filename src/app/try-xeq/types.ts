@@ -26,6 +26,8 @@ export interface Principle {
 export type ResultsProps = {
   formData: FormData;
   onTryAnother?: () => void;
+  selectedExperience: string;
+  stakeholder: string;
 };
 
 export type Experience = {
@@ -35,6 +37,7 @@ export type Experience = {
     image?: string;
     images?: string[];
     icon: ReactNode;
+    stakeholder?: string;
   };
   
   export type ExperienceProps = {
@@ -42,4 +45,23 @@ export type Experience = {
     customExperience?: Experience;
   };
   
-  export type FormValues = Record<string, number>;
+export interface FormValues {
+  [key: string]: number | string;
+}
+
+export type FormSubmission = FormValues & {
+  stakeholder: string;
+  experienceId: string;
+  experienceName: string;
+};
+
+
+  export type GroupedBarChartProps = {
+  scores: {
+    stakeholder: string;
+    values: {
+      name: string; // 'Learning', 'Utility', etc.
+      score: number;
+    }[];
+  }[];
+};

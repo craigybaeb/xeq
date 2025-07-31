@@ -20,6 +20,8 @@ import {
 import BarChart from './BarChart';
 import { useReactToPrint } from 'react-to-print';
 import { Principle, ResultsProps } from './types';
+import GroupedBarChart from './GroupedBarChart';
+import stakeholders from '@/data/stakeholders';
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -97,7 +99,7 @@ principles.forEach((principle) => {
   }));
 });
 
-const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother }) => {
+const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedExperience, stakeholder }) => {
   const printRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
@@ -243,6 +245,24 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother }) => {
         <Card title="XEQ Scores by Dimension" style={{ marginTop: '2rem' }}>
           <BarChart scores={chartData} />
         </Card>
+
+        {selectedExperience !== "custom" && stakeholder && (
+  <Card title="Grouped Scores by Stakeholder" style={{ marginTop: '2rem' }}>
+    <GroupedBarChart
+      scores={(() => {
+        const experienceKey = selectedExperience as keyof typeof stakeholders;
+        const stakeholderList = stakeholders[experienceKey] ?? [];
+
+        return stakeholderList.map((s) => 
+          s.stakeholder === stakeholder
+            ? { stakeholder: s.stakeholder, values: chartData }
+            : s
+        );
+      })()}
+    />
+  </Card>
+)}
+
       </div>
 
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>

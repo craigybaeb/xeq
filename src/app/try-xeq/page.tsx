@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 const predefinedExperiences = [
   {
-    id: 'exp1',
+    id: 'credit-risk',
     name: 'Credit Risk Explanation',
     description: 'Explaining why a loan was denied by an autonomous credit risk assessment system.',
     icon: <CreditCardOutlined style={{ fontSize: '2rem', color: '#1890ff' }} />,
@@ -39,9 +39,10 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/AssistHub/Compliancy-1-5.png',
       '/assets/ExampleUseCases/AssistHub/Compliancy-1-6.png',
     ],
+    stakeholder: 'Loan Applicant',
   },
   {
-    id: 'exp2',
+    id: 'fracture-diagnosis',
     name: 'Fracture Diagnosis Explanation',
     description: 'Explaining a fracture diagnosis made by a computer vision system.',
     icon: <MedicineBoxOutlined style={{ fontSize: '2rem', color: '#eb2f96' }} />,
@@ -50,9 +51,10 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/RadioAssist/Compliancy-2-2.png',
       '/assets/ExampleUseCases/RadioAssist/Compliancy-2-3.png',
     ],
+    stakeholder: 'Radiologist',
   },
   {
-    id: 'exp3',
+    id: 'course-assistant',
     name: 'Course Assistant Explanation',
     description: 'Explaining how a conversational AI course assistant made recommendations for students.',
     icon: <BookOutlined style={{ fontSize: '2rem', color: '#722ed1' }} />,
@@ -61,6 +63,7 @@ const predefinedExperiences = [
       '/assets/ExampleUseCases/CourseAssist/Compliancy-3-2.png',
       '/assets/ExampleUseCases/CourseAssist/Compliancy-3-3.png',
     ],
+    stakeholder: 'Student'
   },
 ];
 
