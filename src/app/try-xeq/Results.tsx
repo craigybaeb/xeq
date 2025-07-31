@@ -22,6 +22,7 @@ import { useReactToPrint } from 'react-to-print';
 import { Principle, ResultsProps } from './types';
 import GroupedBarChart from './GroupedBarChart';
 import stakeholders from '@/data/stakeholders';
+import { saveAs } from 'file-saver';
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -122,6 +123,22 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     const avg = scores?.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores?.length : 0;
     return { name: title, score: avg };
   });
+
+  const handleDownloadCSV = () => {
+    const csvHeaders = ['Stakeholder', ...Array.from({ length: 18 }, (_, i) => (i + 1).toString())];
+    const csvValues = [
+      stakeholder,
+      ...principles.flatMap(p => p.items.map(item => formData?.[item.key]?.toString() ?? '')),
+    ];
+
+    const csvContent = [csvHeaders, csvValues]
+      .map(row => row.map(val => `"${val}"`).join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, `xeq_results_${stakeholder}.csv`);
+  };
+
 
   const getPrincipleFeedback = (name: string, score: number): string => {
     const templates: Record<string, string> = {
@@ -244,7 +261,7 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
 
         <Card title="XEQ Scores by Dimension" style={{ marginTop: '2rem' }}>
   <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
-    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder's goals.
+    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder&apos;s goals.
   </Paragraph>
   <BarChart scores={chartData} />
 </Card>
@@ -286,6 +303,9 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>
         <Button type="primary" onClick={handlePrint} style={{ marginRight: '1rem' }}>
           Print Results to PDF
+        </Button>
+        <Button onClick={handleDownloadCSV} style={{ marginRight: '1rem' }}>
+          Download as CSV
         </Button>
         {onTryAnother && (
           <Button onClick={onTryAnother}>
