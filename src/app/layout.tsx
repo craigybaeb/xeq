@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { ThemeProvider } from './ThemeContext';
 import GoogleAnalytics from '@/app/components/GoogleAnalytics';
+import HydrationWrapper from "./components/HydrationWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider><HydrationWrapper>{children}</HydrationWrapper></ThemeProvider>
       </body>
     </html>
   );
