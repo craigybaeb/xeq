@@ -190,7 +190,7 @@ const stakeholderEntry =
             {stakeholder ? (
   <>
     <Paragraph>
-      In this experience, you are acting as a <Tag><strong>{stakeholder}</strong></Tag>.
+      In this experience, you are acting as a <Tag className={styles.inlineTag}><strong>{stakeholder}</strong></Tag>.
     </Paragraph>
     {stakeholderEntry?.description ? (
       <Paragraph>
@@ -231,7 +231,7 @@ const stakeholderEntry =
                 or prediction from your AI system.
               </Paragraph>
               <Paragraph>Please evaluate the explanation experience from the perspective of a{' '}
-  <Tag style={{marginRight: 0}}><strong>{stakeholder}</strong></Tag>, considering their role, responsibilities, and typical concerns. Think
+  <Tag className={styles.inlineTag}><strong>{stakeholder}</strong></Tag>, considering their role, responsibilities, and typical concerns. Think
   about their specific <i>explanation needs</i> and how well the AI system addresses those needs.</Paragraph>
             </>
           ) : (

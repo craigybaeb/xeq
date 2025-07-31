@@ -107,8 +107,15 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     documentTitle: 'XEQ_Results',
   });
   
+  const formatList = (names: string[]): string => {
+    if (names.length === 0) return '';
+    if (names.length === 1) return names[0];
+    if (names.length === 2) return `${names[0]} & ${names[1]}`;
+  
+    return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
+};
 
-  const systemAvg: number | null = (() => {
+  const stakeholderAvg: number | null = (() => {
     const values = Object.entries(formData)
       .filter(([key]) => key.startsWith('item_'))
       .map(([, val]) => Number(val))
@@ -125,8 +132,8 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
 
   const getPrincipleFeedback = (name: string, score: number): string => {
     const templates: Record<string, string> = {
-      Learning: 'The AI system scored {level} on Learning, suggesting that users {insight}.',
-      Utility: 'Utility was rated {level}, indicating that users {insight}.',
+      Learning: `The AI system scored {level} on Learning, suggesting that ${stakeholder.toLowerCase()}s {insight}.`,
+      Utility: `Utility was rated {level}, indicating that ${stakeholder.toLowerCase()}s {insight}.`,
       Fulfilment: 'The system achieved a {level} score in Fulfilment, which means that it {insight}.',
       Engagement: 'Engagement was {level}, suggesting that the interaction {insight}.',
     };
@@ -167,17 +174,57 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     getPrincipleFeedback(name, score)
   );
 
+  const getStakeholderAverages = () => {
+  const experienceKey = selectedExperience as keyof typeof stakeholders;
+  const stakeholderList = stakeholders[experienceKey] ?? [];
+
+  return stakeholderList.map((s) => {
+    const values = s.stakeholder === stakeholder ? chartData : s.values;
+    const avg = values.reduce((sum, { score }) => sum + score, 0) / values.length;
+    return {
+      stakeholder: s.stakeholder,
+      average: avg,
+    };
+  });
+};
+
+const stakeholderAverages = getStakeholderAverages();
+
+
+  const getSystemAverageScore = (): number | null => {
+    const experienceKey = selectedExperience as keyof typeof stakeholders;
+    const stakeholderList = stakeholders[experienceKey] ?? [];
+
+    const allScores: number[] = [];
+
+    stakeholderList.forEach((s) => {
+      const values = s.stakeholder === stakeholder ? chartData : s.values;
+
+      values.forEach(({ score }) => {
+        if (!isNaN(score)) {
+          allScores.push(score);
+        }
+      });
+  });
+
+  return allScores.length ? allScores.reduce((a, b) => a + b, 0) / allScores.length : null;
+};
+
+
+const systemXEQScore = getSystemAverageScore();
+
+
   return (
     <div style={{ padding: '2rem', maxWidth: 900, margin: '0 auto' }}>
       <div ref={printRef}>
         <Title level={2} style={{ textAlign: 'center' }}>4. Your Results</Title>
 
         <Card style={{ marginBottom: '2rem', background: '#fafafa' }}>
-          <Title level={4}>System XEQ Score</Title>
-          {systemAvg !== null ? (
+          <Title level={4}><strong>{stakeholder}</strong> Stakeholder XEQ Score</Title>
+          {stakeholderAvg !== null ? (
             <>
               <Paragraph style={{ fontSize: '1.1rem' }}>
-                <strong>{systemAvg.toFixed(2)} out of 5</strong>{' '}
+                <strong>{stakeholderAvg.toFixed(2)} out of 5</strong>{' '}
                 <Tooltip title="As there are no baselines yet, we interpret scores below 3 as needing improvement. Scores above 3 suggest the AI system performs reasonably well.">
                   <InfoCircleOutlined style={{ color: '#888', fontSize: '1rem', cursor: 'pointer' }} />
                 </Tooltip>
@@ -244,7 +291,7 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
 
         <Card title="XEQ Scores by Dimension" style={{ marginTop: '2rem' }}>
   <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
-    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder's goals.
+    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder&apos;s goals.
   </Paragraph>
   <BarChart scores={chartData} />
 </Card>
@@ -280,6 +327,40 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
 </Card>
 
 )}
+
+{selectedExperience !== "custom" && <Card title="System XEQ Score (All Stakeholders)" style={{ marginTop: '2rem' }}>
+  <Paragraph style={{ fontSize: '1.1rem' }}>
+    <strong>{systemXEQScore !== null ? `${systemXEQScore.toFixed(2)} out of 5` : 'N/A'}</strong> {' '}
+                <Tooltip title="As there are no baselines yet, we interpret scores below 3 as needing improvement. Scores above 3 suggest the AI system performs reasonably well.">
+                  <InfoCircleOutlined style={{ color: '#888', fontSize: '1rem', cursor: 'pointer' }} />
+                </Tooltip>
+</Paragraph>
+<Paragraph style={{ marginTop: '1rem' }}>
+  {(() => {
+    const good = stakeholderAverages.filter(s => s.average >= 3.5).map(s => s.stakeholder);
+    const neutral = stakeholderAverages.filter(s => s.average >= 2.5 && s.average < 3.5).map(s => s.stakeholder);
+    const poor = stakeholderAverages.filter(s => s.average < 2.5).map(s => s.stakeholder);
+
+    let text = '';
+
+    if (good.length > 0) {
+      text += `Stakeholders like ${formatList(good)} found the explanation experience effective and well-aligned with their needs. `;
+    }
+
+    if (neutral.length > 0) {
+      text += `Roles such as ${formatList(neutral)} gave neutral ratings, suggesting moderate support with room for improvement. `;
+    }
+
+    if (poor.length > 0) {
+      text += `The experience may need significant improvement for ${formatList(poor)}, who rated it low on average.`;
+    }
+
+    return text || 'Stakeholder feedback is mixed. Use the scores above to explore differences in experience quality.';
+  })()}
+</Paragraph>
+
+</Card>}
+
 
       </div>
 
