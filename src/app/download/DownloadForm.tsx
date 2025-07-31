@@ -31,14 +31,6 @@ const DownloadForm: React.FC<DownloadFormProps> = ({
       >
         <div aria-disabled={skip}>
           <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: !skip, type: 'email' }]}
-          >
-            <Input placeholder="e.g., yourname@example.com" disabled={skip} />
-          </Form.Item>
-
-          <Form.Item
             name="jobRole"
             label="Job Role"
             rules={[{ required: !skip }]}
