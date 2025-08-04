@@ -11,45 +11,60 @@ export function useDownloadForm() {
   const [showThankYou, setShowThankYou] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
 
+  const handleDownload = async (keys: string[]) => {
+    const selectedFiles = downloadOptions
+      .filter((d: DownloadOption) => keys.includes(d.key))
+      .map((d) => ({
+        name: d.file.split('/').pop() || d.key,
+        url: d.file,
+      }));
 
-  const handleDownload = (keyList: string[]) => {
-    keyList.forEach((key) => {
-      const target = downloadOptions.find((d: DownloadOption) => d.key === key);
-      if (!target) return;
+    try {
+      const response = await fetch('/api/download-files', {
+        method: 'POST',
+        body: JSON.stringify({ files: selectedFiles }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        console.error('Failed to fetch ZIP file');
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = target.file;
-      link.download = '';
+      link.href = url;
+      link.download = 'XEQ_Toolkit.zip';
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-    });
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download error:', error);
+    }
   };
 
-  const onFinish = (values: Record<string, number>) => {
-  console.log('Form submission for:', selected, values);
+  const onFinish = async (values: Record<string, number>) => {
+    console.log('Form submission for:', selected, values);
 
-  // Google Analytics event tracking
-  if (typeof window !== 'undefined') {
-  const gtag = (window as typeof window & { gtag: Gtag.Gtag }).gtag;
+    // Google Analytics tracking
+    if (typeof window !== 'undefined') {
+      const gtag = (window as typeof window & { gtag?: any }).gtag;
+      if (typeof gtag === 'function') {
+        gtag('event', 'download_submit', {
+          job_role: values.jobRole || '',
+          industry: values.industry || '',
+          selected_files: selected.join(', '),
+        });
+      }
+    }
 
-  if (typeof gtag === 'function') {
-    gtag('event', 'download_submit', {
-      job_role: values.jobRole || '',
-      industry: values.industry || '',
-      selected_files: selected.join(', '),
-    });
-  }
-}
+    await handleDownload(selected);
 
-
-  // Actual file download
-  handleDownload(selected);
-
-  // UI state changes
-  form.resetFields();
-  setShowThankYou(true);
-};
-
+    form.resetFields();
+    setShowThankYou(true);
+  };
 
   return {
     form,

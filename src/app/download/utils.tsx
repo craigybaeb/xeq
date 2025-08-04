@@ -1,4 +1,9 @@
-import { FileTextOutlined, BookOutlined, TableOutlined, ImportOutlined } from '@ant-design/icons';
+import {
+  FileTextOutlined,
+  BookOutlined,
+  TableOutlined,
+  ImportOutlined,
+} from '@ant-design/icons';
 import { DownloadOption } from './types';
 
 export const downloadOptions: DownloadOption[] = [
@@ -6,21 +11,24 @@ export const downloadOptions: DownloadOption[] = [
     key: 'questionnaire',
     label: 'Questionnaire',
     icon: <FileTextOutlined style={{ fontSize: 24 }} />,
-    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_scale.pdf?raw=true',
+    file:
+      'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/xeq_scale.pdf',
     disabled: false,
   },
   {
     key: 'handbook',
     label: 'Handbook',
     icon: <BookOutlined style={{ fontSize: 24 }} />,
-    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_handbook.pdf?raw=true',
+    file:
+      'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/xeq_handbook.pdf',
     disabled: false,
   },
   {
     key: 'sheet',
     label: 'Data Sheet',
     icon: <TableOutlined style={{ fontSize: 24 }} />,
-    file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/XEQ_Data_Analysis_Tool.xlsx?raw=true',
+    file:
+      'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/XEQ_Data_Analysis_Tool.xlsx',
     disabled: false,
   },
   {
