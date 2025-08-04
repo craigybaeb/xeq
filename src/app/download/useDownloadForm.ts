@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Form } from 'antd';
 import { downloadOptions } from './utils';
 import { DownloadOption } from './types';
+import { Gtag } from './types';
 
 export function useDownloadForm() {
   const [form] = Form.useForm();
@@ -50,7 +51,7 @@ export function useDownloadForm() {
 
     // Google Analytics tracking
     if (typeof window !== 'undefined') {
-      const gtag = (window as typeof window & { gtag?: any }).gtag;
+      const gtag = (window as typeof window & { gtag?: Gtag }).gtag;
       if (typeof gtag === 'function') {
         gtag('event', 'download_submit', {
           job_role: values.jobRole || '',

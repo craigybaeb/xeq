@@ -26,3 +26,9 @@ export interface ThankYouResultProps {
   selected: string[];
   handleDownload: (selected: string[]) => void;
 }
+
+export type Gtag = (
+  command: 'config' | 'event' | 'set',
+  targetId: string | Record<string, unknown>,
+  config?: Record<string, unknown>
+) => void;
