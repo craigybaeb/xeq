@@ -9,14 +9,17 @@ import { useInView } from 'react-intersection-observer';
 const { Title } = Typography;
 
 const bibtexEntry = `
-@misc{wijekoon2025xeqscaleevaluatingxai,
-  title={XEQ Scale for Evaluating XAI Experience Quality}, 
-  author={Anjana Wijekoon and Nirmalie Wiratunga and David Corsar and Kyle Martin and Ikechukwu Nkisi-Orji and Belen Díaz-Agudo and Derek Bridge},
-  year={2025},
-  eprint={2407.10662},
-  archivePrefix={arXiv},
-  primaryClass={cs.AI},
-  url={https://arxiv.org/abs/2407.10662}, 
+@article{wijekoon2026xeqscale,
+  title={XEQ Scale for Evaluating XAI Experience Quality},
+  author={Wijekoon, Anjana and Wiratunga, Nirmalie and Corsar, David and Martin, Kyle and Nkisi-Orji, Ikechukwu and Pirie, Craig and Díaz-Agudo, Belen and Bridge, Derek},
+  journal={ACM Transactions on Interactive Intelligent Systems},
+  volume={37},
+  number={4},
+  articleno={111},
+  pages={1--30},
+  month={jun},
+  year={2026},
+  publisher={Association for Computing Machinery}
 }
 `.trim();
 

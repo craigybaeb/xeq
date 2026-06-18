@@ -1,4 +1,5 @@
 import {
+  FilePdfOutlined,
   FileTextOutlined,
   BookOutlined,
   TableOutlined,
@@ -21,6 +22,13 @@ export const downloadOptions: DownloadOption[] = [
     icon: <BookOutlined style={{ fontSize: 24 }} />,
     file:
       'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/xeq_handbook.pdf',
+    disabled: false,
+  },
+  {
+    key: 'paper',
+    label: 'Paper',
+    icon: <FilePdfOutlined style={{ fontSize: 24 }} />,
+    file: '/assets/XEQ_Scale_ACM_TIIS_2026.pdf',
     disabled: false,
   },
   {

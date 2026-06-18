@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Typography, Card, Row, Col, theme } from 'antd';
-import { BulbOutlined, RocketOutlined, SmileOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { RocketOutlined, SmileOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import ImprovementSection from './ImprovementSection'; 
 
@@ -10,26 +10,20 @@ const { Title, Paragraph, Text } = Typography;
 
 const principles = [
   {
-    title: 'Learning',
-    description: 'The extent to which the experience develops knowledge or competence.',
-    icon: <BulbOutlined style={{ fontSize: '2.5rem', color: '#1890ff' }} />,
-    color: '#e6f7ff',
-  },
-  {
     title: 'Utility',
     description: 'The contribution of the experience towards task completion.',
     icon: <RocketOutlined style={{ fontSize: '2.5rem', color: '#9254de' }} />,
     color: '#f9f0ff',
   },
   {
-    title: 'Fulfilment',
-    description: 'The degree to which the experience supports the achievement of XAI goals.',
+    title: 'Satisfaction',
+    description: 'The degree to which the experience satisfies stakeholder explanation needs.',
     icon: <SmileOutlined style={{ fontSize: '2.5rem', color: '#fa8c16' }} />,
     color: '#fff7e6',
   },
   {
-    title: 'Engagement',
-    description: 'The quality of the interaction between the user and the XAI system.',
+    title: 'Effectiveness',
+    description: 'The extent to which the experience improves comprehension through clear, coherent explanations.',
     icon: <ThunderboltOutlined style={{ fontSize: '2.5rem', color: '#52c41a' }} />,
     color: '#f6ffed',
   },
@@ -58,14 +52,14 @@ const XEQDescription: React.FC = () => {
         >
           <Title level={2} style={{ color: token.colorTextHeading }}>What is the XEQ Scale?</Title>
           <Paragraph style={{ fontSize: '1.15rem', maxWidth: 900, margin: '0 auto', color: token.colorText }}>
-          The XEQ Scale is a tool for measurement of XAI experiences across four key dimensions: Learning, Utility, Fulfilment, and Engagement. 
+          The XEQ Scale is a tool for measurement of XAI experiences across three key factors: Utility, Satisfaction, and Effectiveness. 
           </Paragraph>
         </Card>
       </motion.div>
 
       <Row gutter={[24, 24]} justify="center" style={{ marginTop: '3rem' }}>
       {principles.map(({ title, description, icon, color }, index) => (
-  <Col xs={24} sm={12} md={12} lg={6} key={title}>
+  <Col xs={24} sm={12} md={8} key={title}>
     <motion.div
       whileHover={{ y: -5, scale: 1.02 }}
       initial={{ opacity: 0, y: 30 }}
