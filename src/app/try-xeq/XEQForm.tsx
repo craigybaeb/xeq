@@ -14,12 +14,12 @@ import {
   Grid,
 } from 'antd';
 import {
-  BulbOutlined,
   RocketOutlined,
   SmileOutlined,
   ThunderboltOutlined,
   ExclamationCircleTwoTone,
 } from '@ant-design/icons';
+import { xeqFactors, XEQFactorKey } from '@/data/xeqScale';
 
 const { Title } = Typography;
 const { Panel } = Collapse;
@@ -59,64 +59,25 @@ interface XEQFormProps {
 // ----------------------------
 // Setup
 // ----------------------------
-let globalItemIndex = 0;
-
-const principles: Principle[] = [
-  {
-    key: 'Learning',
-    title: 'Learning',
-    description: 'The extent to which the experience develops knowledge or competence.',
-    icon: <BulbOutlined style={{ fontSize: '2rem', color: '#1890ff' }} />,
-    color: '#e6f7ff',
-    items: [
-      'The experience helped me understand the reliability of the AI system.',
-      'The information presented during the experience was clear.',
-      'The experience has improved my understanding of how the AI system works.',
-      'The experience helped me build trust in the AI system.',
-    ].map((text) => ({ key: `item_${globalItemIndex++}`, text })),
-  },
-  {
-    key: 'Utility',
-    title: 'Utility',
-    description: 'The contribution of the experience towards task completion.',
+const factorPresentation: Record<XEQFactorKey, { icon: React.ReactNode; color: string }> = {
+  Utility: {
     icon: <RocketOutlined style={{ fontSize: '2rem', color: '#9254de' }} />,
     color: '#f9f0ff',
-    items: [
-      'I am confident about using the AI system.',
-      'The experience helped me make more informed decisions.',
-      'The information presented was personalised to the requirements of my role.',
-      'The information presented was understandable within the requirements of my role.',
-      'The experience helped to complete the intended task using the AI system.',
-      'The information presented during the experience was sufficiently detailed.',
-    ].map((text) => ({ key: `item_${globalItemIndex++}`, text })),
   },
-  {
-    key: 'Fulfilment',
-    title: 'Fulfilment',
-    description: 'The degree to which the experience supports the achievement of XAI goals.',
+  Satisfaction: {
     icon: <SmileOutlined style={{ fontSize: '2rem', color: '#fa8c16' }} />,
     color: '#fff7e6',
-    items: [
-      'The experience was consistent with my expectations.',
-      'The presentation of the experience was appropriate for my requirements.',
-      'The information presented showed me that the AI system performs well.',
-      'The experience provided answers to all of my explanation needs.',
-      'The experience was satisfying.',
-    ].map((text) => ({ key: `item_${globalItemIndex++}`, text })),
   },
-  {
-    key: 'Engagement',
-    title: 'Engagement',
-    description: 'The quality of the interaction between the user and the XAI system.',
+  Effectiveness: {
     icon: <ThunderboltOutlined style={{ fontSize: '2rem', color: '#52c41a' }} />,
     color: '#f6ffed',
-    items: [
-      'The explanations received throughout the experience were consistent.',
-      'I received the explanations in a timely and efficient manner.',
-      'The experience progressed sensibly.',
-    ].map((text) => ({ key: `item_${globalItemIndex++}`, text })),
   },
-];
+};
+
+const principles: Principle[] = xeqFactors.map((factor) => ({
+  ...factor,
+  ...factorPresentation[factor.key],
+}));
 
 // ----------------------------
 // Component

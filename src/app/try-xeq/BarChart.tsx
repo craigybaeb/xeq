@@ -24,13 +24,11 @@ const BarChart: React.FC<BarChartProps> = ({ scores }) => {
         label: 'XEQ Score',
         data: scores.map((s) => s.score),
         backgroundColor: [
-          '#e6f7ff',
           '#f9f0ff',
           '#fff7e6',
           '#f6ffed',
         ],
         borderColor: [
-          '#1890ff',
           '#9254de',
           '#fa8c16',
           '#52c41a',

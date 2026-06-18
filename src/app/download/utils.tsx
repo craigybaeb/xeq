@@ -1,4 +1,4 @@
-import { FileTextOutlined, BookOutlined, TableOutlined, ImportOutlined } from '@ant-design/icons';
+import { FilePdfOutlined, FileTextOutlined, BookOutlined, TableOutlined, ImportOutlined } from '@ant-design/icons';
 import { DownloadOption } from './types';
 
 export const downloadOptions: DownloadOption[] = [
@@ -14,6 +14,13 @@ export const downloadOptions: DownloadOption[] = [
     label: 'Handbook',
     icon: <BookOutlined style={{ fontSize: 24 }} />,
     file: 'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_handbook.pdf?raw=true',
+    disabled: false,
+  },
+  {
+    key: 'paper',
+    label: 'Paper',
+    icon: <FilePdfOutlined style={{ fontSize: 24 }} />,
+    file: '/assets/XEQ_Scale_ACM_TIIS_2026.pdf',
     disabled: false,
   },
   {

@@ -60,7 +60,7 @@ export type FormSubmission = FormValues & {
   scores: {
     stakeholder: string;
     values: {
-      name: string; // 'Learning', 'Utility', etc.
+      name: string; // 'Utility', 'Satisfaction', etc.
       score: number;
     }[];
   }[];

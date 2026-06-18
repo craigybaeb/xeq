@@ -13,13 +13,14 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { GroupedBarChartProps } from './types';
+import { xeqFactorLabels } from '@/data/xeqScale';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const factorLabels = ['Learning', 'Utility', 'Fulfilment', 'Engagement'];
+const factorLabels = xeqFactorLabels;
 
-const backgroundColors = ['#e6f7ff', '#f9f0ff', '#fff7e6', '#f6ffed'];
-const borderColors = ['#1890ff', '#9254de', '#fa8c16', '#52c41a'];
+const backgroundColors = ['#f9f0ff', '#fff7e6', '#f6ffed'];
+const borderColors = ['#9254de', '#fa8c16', '#52c41a'];
 
 const GroupedBarChart: React.FC<GroupedBarChartProps> = ({ scores }) => {
   const stakeholders = scores.map((s) => s.stakeholder);

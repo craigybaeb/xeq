@@ -11,7 +11,6 @@ import {
   Tooltip
 } from 'antd';
 import {
-  BulbOutlined,
   RocketOutlined,
   SmileOutlined,
   ThunderboltOutlined,
@@ -22,82 +21,30 @@ import { useReactToPrint } from 'react-to-print';
 import { Principle, ResultsProps } from './types';
 import GroupedBarChart from './GroupedBarChart';
 import stakeholders from '@/data/stakeholders';
+import { xeqFactors, XEQFactorKey } from '@/data/xeqScale';
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
-let itemIndex = 0;
-const principles: Principle[] = [
-  {
-    key: 'Learning',
-    title: 'Learning',
-    description: 'The extent to which the experience develops knowledge or competence.',
-    icon: <BulbOutlined style={{ fontSize: '2rem', color: '#1890ff' }} />,
-    color: '#e6f7ff',
-    items: [],
-  },
-  {
-    key: 'Utility',
-    title: 'Utility',
-    description: 'The contribution of the experience towards task completion.',
+const factorPresentation: Record<XEQFactorKey, { icon: React.ReactNode; color: string }> = {
+  Utility: {
     icon: <RocketOutlined style={{ fontSize: '2rem', color: '#9254de' }} />,
     color: '#f9f0ff',
-    items: [],
   },
-  {
-    key: 'Fulfilment',
-    title: 'Fulfilment',
-    description: 'The degree to which the experience supports the achievement of XAI goals.',
+  Satisfaction: {
     icon: <SmileOutlined style={{ fontSize: '2rem', color: '#fa8c16' }} />,
     color: '#fff7e6',
-    items: [],
   },
-  {
-    key: 'Engagement',
-    title: 'Engagement',
-    description: 'The quality of the interaction between the user and the XAI system.',
+  Effectiveness: {
     icon: <ThunderboltOutlined style={{ fontSize: '2rem', color: '#52c41a' }} />,
     color: '#f6ffed',
-    items: [],
   },
-];
-
-// Add individual items
-const allItems: Record<string, string[]> = {
-  Learning: [
-    'The experience helped me understand the reliability of the AI system.',
-    'The information presented during the experience was clear.',
-    'The experience has improved my understanding of how the AI system works.',
-    'The experience helped me build trust in the AI system.',
-  ],
-  Utility: [
-    'I am confident about using the AI system.',
-    'The experience helped me make more informed decisions.',
-    'The information presented was personalised to the requirements of my role.',
-    'The information presented was understandable within the requirements of my role.',
-    'The experience helped to complete the intended task using the AI system.',
-    'The information presented during the experience was sufficiently detailed.',
-  ],
-  Fulfilment: [
-    'The experience was consistent with my expectations.',
-    'The presentation of the experience was appropriate for my requirements.',
-    'The information presented showed me that the AI system performs well.',
-    'The experience provided answers to all of my explanation needs.',
-    'The experience was satisfying.',
-  ],
-  Engagement: [
-    'The explanations received throughout the experience were consistent.',
-    'I received the explanations in a timely and efficient manner.',
-    'The experience progressed sensibly.',
-  ],
 };
 
-principles.forEach((principle) => {
-  principle.items = allItems[principle.key].map((text) => ({
-    key: `item_${itemIndex++}`,
-    text,
-  }));
-});
+const principles: Principle[] = xeqFactors.map((factor) => ({
+  ...factor,
+  ...factorPresentation[factor.key],
+}));
 
 const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedExperience, stakeholder }) => {
   const printRef = useRef<HTMLDivElement>(null);
@@ -132,10 +79,9 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
 
   const getPrincipleFeedback = (name: string, score: number): string => {
     const templates: Record<string, string> = {
-      Learning: `The AI system scored {level} on Learning, suggesting that ${stakeholder.toLowerCase()}s {insight}.`,
       Utility: `Utility was rated {level}, indicating that ${stakeholder.toLowerCase()}s {insight}.`,
-      Fulfilment: 'The system achieved a {level} score in Fulfilment, which means that it {insight}.',
-      Engagement: 'Engagement was {level}, suggesting that the interaction {insight}.',
+      Satisfaction: 'Satisfaction was rated {level}, suggesting that the experience {insight}.',
+      Effectiveness: 'Effectiveness was rated {level}, suggesting that the explanations {insight}.',
     };
 
     let level = '';
@@ -144,26 +90,23 @@ const XEQResults: React.FC<ResultsProps> = ({ formData, onTryAnother, selectedEx
     if (score <= 3) {
       level = 'low';
       insight = {
-        Learning: 'may not find it helpful for developing competence or understanding',
         Utility: 'might not feel it supports their task completion well',
-        Fulfilment: 'may not have had their explanation needs fully met',
-        Engagement: 'might have found the experience inconsistent or disjointed',
+        Satisfaction: 'may not be meeting stakeholder expectations or explanation needs',
+        Effectiveness: 'may not be clear, coherent, or detailed enough to support understanding',
       }[name]!;
     } else if (score < 4) {
       level = 'moderate';
       insight = {
-        Learning: 'found some value but with room to better support understanding',
         Utility: 'felt partially supported in completing tasks',
-        Fulfilment: 'felt somewhat fulfilled but possibly left with questions',
-        Engagement: 'had a fairly smooth experience, but it could be improved',
+        Satisfaction: 'partly met expectations but may still leave some needs unmet',
+        Effectiveness: 'provided some useful understanding but could be clearer or more complete',
       }[name]!;
     } else {
       level = 'high';
       insight = {
-        Learning: 'found it useful for understanding and building trust',
         Utility: 'felt it clearly supported their goals and decision making',
-        Fulfilment: 'had their expectations and explanation needs met',
-        Engagement: 'experienced a smooth and coherent interaction',
+        Satisfaction: 'met stakeholder expectations and explanation needs well',
+        Effectiveness: 'were coherent, clear, and useful for understanding the AI system',
       }[name]!;
     }
 
@@ -291,7 +234,7 @@ const systemXEQScore = getSystemAverageScore();
 
         <Card title="XEQ Scores by Dimension" style={{ marginTop: '2rem' }}>
   <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
-    This chart displays your average ratings across the four explanation quality dimensions: Learning, Utility, Fulfilment, and Engagement. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder&apos;s goals.
+    This chart displays your average ratings across the three explanation quality factors: Utility, Satisfaction, and Effectiveness. Use it to reflect on which aspects of the explanation experience were strongest, and where improvements may be needed to better support the stakeholder&apos;s goals.
   </Paragraph>
   <BarChart scores={chartData} />
 </Card>
@@ -310,7 +253,7 @@ const systemXEQScore = getSystemAverageScore();
   style={{ marginTop: '2rem' }}
 >
   <Paragraph type="secondary" style={{ marginBottom: '1rem' }}>
-     This chart shows how each stakeholder scores the explanation experience across the four XEQ dimensions. Use it to identify where stakeholder needs are being well addressed or potentially overlooked. Large differences between stakeholders may indicate a need to further personalise explanations for different roles.
+     This chart shows how each stakeholder scores the explanation experience across the three XEQ factors. Use it to identify where stakeholder needs are being well addressed or potentially overlooked. Large differences between stakeholders may indicate a need to further personalise explanations for different roles.
   </Paragraph>
   <GroupedBarChart
     scores={(() => {
