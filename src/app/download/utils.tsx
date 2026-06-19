@@ -13,7 +13,7 @@ export const downloadOptions: DownloadOption[] = [
     label: 'Questionnaire',
     icon: <FileTextOutlined style={{ fontSize: 24 }} />,
     file:
-      'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/xeq_scale.pdf',
+      'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_scale.pdf?raw=true',
     disabled: false,
   },
   {
@@ -21,14 +21,15 @@ export const downloadOptions: DownloadOption[] = [
     label: 'Handbook',
     icon: <BookOutlined style={{ fontSize: 24 }} />,
     file:
-      'https://raw.githubusercontent.com/craigybaeb/xeq/main/public/assets/xeq_handbook.pdf',
+      'https://github.com/craigybaeb/xeq/blob/main/public/assets/xeq_handbook.pdf?raw=true',
     disabled: false,
   },
   {
     key: 'paper',
     label: 'Paper',
     icon: <FilePdfOutlined style={{ fontSize: 24 }} />,
-    file: '/assets/XEQ_Scale_ACM_TIIS_2026.pdf',
+    file:
+      'https://github.com/craigybaeb/xeq/blob/main/public/assets/XEQ_Scale_ACM_TIIS_2026.pdf?raw=true',
     disabled: false,
   },
   {

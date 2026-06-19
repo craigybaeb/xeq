@@ -79,6 +79,11 @@ const principles: Principle[] = xeqFactors.map((factor) => ({
   ...factorPresentation[factor.key],
 }));
 
+const itemDisplayNumberByKey = new Map<string, number>();
+principles.flatMap(({ items }) => items).forEach(({ key }, index) => {
+  itemDisplayNumberByKey.set(key, index + 1);
+});
+
 // ----------------------------
 // Component
 // ----------------------------
@@ -195,7 +200,7 @@ const XEQForm: React.FC<XEQFormProps> = ({ onSubmit }) => {
                   <Form.Item
                     key={itemKey}
                     name={itemKey}
-                    label={`${Number(itemKey.split('_')[1]) + 1}. ${text}`}
+                    label={`${itemDisplayNumberByKey.get(itemKey) ?? ''}. ${text}`}
                     rules={[{ required: true, message: 'Please select a response.' }]}
                     style={{ marginBottom: '1.5rem' }}
                   >
